@@ -6,6 +6,7 @@ declare var lightGallery:any;
 declare var iziToast:any;
 import { io } from "socket.io-client";
 import { SOCKET, URL_SERVICES } from 'src/environments/environment';
+import { isAvailable } from 'src/app/helpers/producto';
 declare var $:any;
 declare function productLightbox():any;
 declare function slickConfig():any;
@@ -30,6 +31,8 @@ export class ShowProductoComponent implements OnInit {
   public url = URL_SERVICES;
   public urlImg = this.url + 'producto/portada/';
   public reviews :Array<any> = [];
+
+  public isAvailable = isAvailable;
 
   public selectedVariety = '';
   public obj_variedad_select : any= {

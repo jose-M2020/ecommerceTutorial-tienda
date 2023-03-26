@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { GuestService } from 'src/app/services/guest.service';
+import { URL_SERVICES } from 'src/environments/environment';
+import { isAvailable } from 'src/app/helpers/producto'
 
 declare var noUiSlider:any;
 declare var $:any;
-import { GuestService } from 'src/app/services/guest.service';
-import { URL_SERVICES } from 'src/environments/environment';
 declare var iziToast:any;
 
 @Component({
@@ -17,7 +18,7 @@ export class IndexProductoComponent implements OnInit {
   //GEO
   public geo : any = {};
   public country = '';
-  public currency = 'MXN';
+  public currency = '';
   public user_lc : any = undefined;
 
   public token :any = '';
@@ -32,7 +33,8 @@ export class IndexProductoComponent implements OnInit {
   public sort_by = 'Defecto';
   public page = 1;
   public pageSize = 15;
-
+  public isAvailable = isAvailable;
+  
   public route_categoria = '';
   public filtro_search = '';
   public load_data = false;
@@ -52,8 +54,6 @@ export class IndexProductoComponent implements OnInit {
     this.geo = JSON.parse(lc_geo);
     this.country = this.geo.country_name;
     this.currency = this.geo.currency;
-
-    
   }
 
   async ngOnInit() {

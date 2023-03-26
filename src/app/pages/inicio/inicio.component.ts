@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { isAvailable } from 'src/app/helpers/producto';
 import { GuestService } from 'src/app/services/guest.service';
 import { URL_SERVICES } from 'src/environments/environment';
 declare function navigateCarousel():any;
@@ -21,6 +22,7 @@ export class InicioComponent implements OnInit {
   public producto_destacado_cuatro :any = null;
   public url = URL_SERVICES;
   public productImgUrl = this.url + 'producto/portada/';
+  public isAvailable = isAvailable;
 
   public new_productos : Array<any> = [];
 

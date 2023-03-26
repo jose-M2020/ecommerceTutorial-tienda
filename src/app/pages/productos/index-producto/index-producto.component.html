@@ -112,9 +112,6 @@
                 </div>
               </div>
             </ng-container>
-            
-            
-            
           </aside>
         </div>
         <div class="ps-shop__wrapper">
@@ -146,122 +143,17 @@
             </div>
           </div>
           <div class="ps-shop__filter-panel"></div>
+          
           <div class="ps-shop__content">
             <div class="row mb-5">
               <ng-container *ngFor="let item of productos| slice: (page-1)*pageSize : (page-1) * pageSize + pageSize">
-                <ng-container *ngIf="item.visibilidad == 'Todo el mundo'">
-                  <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 " >
-                    <div class="ps-product">
-                      <div class="ps-product__thumbnail">
-                        <img class="ps-product__image" [src]="item.portada.secure_url" alt=""/>
-                        <img class="ps-product__image-alt" [src]="item.galeria[0].secure_url" alt=""/>
-                        <a class="ps-product__overlay" [routerLink]="['/productos/'+item.slug]" ></a>
-                        <span class="ps-badge ps-badge--hot" *ngIf="item.precio_antes_dolares >= 1 || item.precio_antes_soles >= 1">¡OFERTA!</span>
-                        
-                      </div>
-                      <div class="ps-product__content"><a class="ps-product__title"[routerLink]="['/productos/'+item.slug]" >{{item.titulo}}</a>
-                        <span><i class="text-warning fa fa-star"></i></span>
-                                  <span><i class="text-warning fa fa-star"></i></span>
-                                  <span><i class="text-warning fa fa-star"></i></span>
-                                  <span><i class="text-warning fa fa-star"></i></span>
-                                  <span><i class="text-warning fa fa-star"></i></span>
-                        <p class="ps-product__price">
-                          <ng-container *ngIf="currency != 'MXN'">         
-                            <span class=" mr-3"><b>${{item.precio_dolar}}</b></span>
-                            <span class="text-danger" *ngIf="item.precio_antes_dolares >= 1">
-                              <del>${{item.precio_antes_dolares}}</del>
-                            </span>
-                          </ng-container>
-                          <ng-container *ngIf="currency == 'MXN'">
-                            
-                            <span class=" mr-3"><b>$MXN{{item.precio}}</b></span>
-                            <span class="text-danger" *ngIf="item.precio_antes_soles >= 1">
-                              <del>$MXN{{item.precio_antes_soles}}</del>
-                            </span>
-                          </ng-container>
-                        </p>
-                      </div>
-                    </div>
+                  <div class="{{isAvailable(item.visibilidad, currency) && 'col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6'}}">
+                    <app-producto
+                      [producto]="item"
+                      [currency]="currency"
+                    ></app-producto>
                   </div>
-                </ng-container>
-                <ng-container *ngIf="currency == 'MXN'">
-                  <ng-container *ngIf="item.visibilidad == 'Mexico'">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 " >
-                      <div class="ps-product">
-                        <div class="ps-product__thumbnail">
-                          <img class="ps-product__image" [src]="item.portada.secure_url" alt=""/>
-                          <img class="ps-product__image-alt" [src]="item.galeria[0].secure_url" alt=""/>
-                          <a class="ps-product__overlay"  [routerLink]="['/productos/'+item.slug]"></a>
-                          <span class="ps-badge ps-badge--hot" *ngIf="item.precio_antes_dolares >= 1 || item.precio_antes_soles >= 1">¡OFERTA!</span>
-                          
-                        </div>
-                        <div class="ps-product__content"><a class="ps-product__title"[routerLink]="['/productos/'+item.slug]" >{{item.titulo}}</a>
-                          <span><i class="text-warning fa fa-star"></i></span>
-                                    <span><i class="text-warning fa fa-star"></i></span>
-                                    <span><i class="text-warning fa fa-star"></i></span>
-                                    <span><i class="text-warning fa fa-star"></i></span>
-                                    <span><i class="text-warning fa fa-star"></i></span>
-                          <p class="ps-product__price">
-                            <ng-container *ngIf="currency != 'MXN'">         
-                              <span class=" mr-3"><b>${{item.precio_dolar}}</b></span>
-                              <span class="text-danger" *ngIf="item.precio_antes_dolares >= 1">
-                                <del>${{item.precio_antes_dolares}}</del>
-                              </span>
-                            </ng-container>
-                            <ng-container *ngIf="currency == 'MXN'">
-                              
-                              <span class=" mr-3"><b>$MXN{{item.precio}}</b></span>
-                              <span class="text-danger" *ngIf="item.precio_antes_soles >= 1">
-                                <del>$MXN{{item.precio_antes_soles}}</del>
-                              </span>
-                            </ng-container>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </ng-container>
-                </ng-container>
-                <ng-container *ngIf="currency != 'MXN'">
-                  <ng-container *ngIf="item.visibilidad == 'Exterior'">
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 " >
-                      <div class="ps-product">
-                        <div class="ps-product__thumbnail">
-                          <img class="ps-product__image" [src]="item.portada.secure_url" alt=""/>
-                          <img class="ps-product__image-alt" [src]="item.galeria[0].secure_url" alt=""/>
-                          <a class="ps-product__overlay"  [routerLink]="['/productos/'+item.slug]"></a>
-                          <span class="ps-badge ps-badge--hot" *ngIf="item.precio_antes_dolares >= 1 || item.precio_antes_soles >= 1">¡OFERTA!</span>
-                          
-                        </div>
-                        <div class="ps-product__content"><a class="ps-product__title"[routerLink]="['/productos/'+item.slug]" >{{item.titulo}}</a>
-                          <span><i class="text-warning fa fa-star"></i></span>
-                                    <span><i class="text-warning fa fa-star"></i></span>
-                                    <span><i class="text-warning fa fa-star"></i></span>
-                                    <span><i class="text-warning fa fa-star"></i></span>
-                                    <span><i class="text-warning fa fa-star"></i></span>
-                          <p class="ps-product__price">
-                            <ng-container *ngIf="currency != 'MXN'">         
-                              <span class=" mr-3"><b>${{item.precio_dolar}}</b></span>
-                              <span class="text-danger" *ngIf="item.precio_antes_dolares >= 1">
-                                <del>${{item.precio_antes_dolares}}</del>
-                              </span>
-                            </ng-container>
-                            <ng-container *ngIf="currency == 'MXN'">
-                              
-                              <span class=" mr-3"><b>$MXN{{item.precio}}</b></span>
-                              <span class="text-danger" *ngIf="item.precio_antes_soles >= 1">
-                                <del>$MXN{{item.precio_antes_soles}}</del>
-                              </span>
-                            </ng-container>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </ng-container>
-                </ng-container>
               </ng-container>
-              
-              
-              
             </div>
 
             <div class="row">
@@ -274,7 +166,7 @@
               </div>
             </div>
           </div>
-     
+          <ngx-skeleton-loader count="1" appearance="circle"></ngx-skeleton-loader>
         </div>
       </div>
     </div>

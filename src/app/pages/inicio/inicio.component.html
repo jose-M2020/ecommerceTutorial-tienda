@@ -202,40 +202,14 @@
             </div>
             <div class="ps-section__content">
                 <div class="row" *ngIf="new_productos.length >= 1">
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6 " *ngFor="let item of new_productos">
-                        <div class="ps-product">
-                            <div class="ps-product__thumbnail">
-                              <img class="ps-product__image"  [src]="item.portada.secure_url" alt=""/>
-                              <img class="ps-product__image-alt" [src]="item.galeria[0].secure_url" alt=""/>
-                              <a class="ps-product__overlay" [routerLink]="['/productos/'+item.slug]"></a>
-                                <div class="ps-product__actions">
-                                    <a [routerLink]="['/productos/'+item.slug]"> Al carrito</a>
-                                </div>
-                            </div>
-                            <div class="ps-product__content">
-                                <a class="ps-product__title" [routerLink]="['/productos/'+item.slug]">{{item.titulo}}</a>
-                                  <span><i class="text-warning fa fa-star"></i></span>
-                                  <span><i class="text-warning fa fa-star"></i></span>
-                                  <span><i class="text-warning fa fa-star"></i></span>
-                                  <span><i class="text-warning fa fa-star"></i></span>
-                                  <span><i class="text-warning fa fa-star"></i></span>
-                                  <p class="ps-product__price">
-                                      <ng-container *ngIf="currency != 'MXN'">
-                                        <span class="text-danger mr-3" *ngIf="item.precio_antes_dolares >= 1">
-                                          <del>${{item.precio_antes_dolares}}</del>
-                                        </span>
-                                        <span><b>${{item.precio_dolar}}</b></span>
-                                      </ng-container>
-                                      <ng-container *ngIf="currency == 'MXN'">
-                                        <span class="text-danger mr-3" *ngIf="item.precio_antes_soles >= 1">
-                                          <del>$MXN{{item.precio_antes_soles}}</del>
-                                        </span>
-                                        <span><b>$MXN{{item.precio}}</b></span>
-                                      </ng-container>
-                                    </p>
-                            </div>
-                        </div>
-                    </div>
+                    <ng-container *ngFor="let item of new_productos">
+                        <div class="{{isAvailable(item.visibilidad, currency) && 'col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6'}}">
+                          <app-producto
+                            [producto]="item"
+                            [currency]="currency"
+                          ></app-producto>
+                        </div>                        
+                    </ng-container>
                 </div>
                 <div class="row" *ngIf="new_productos.length == 0">
                     <div class="col-12 text-center">

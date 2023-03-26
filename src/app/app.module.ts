@@ -34,7 +34,8 @@ import { PoliticasEnvioComponent } from './pages/static/politicas-envio/politica
 import { TerminosCondicionesComponent } from './pages/static/terminos-condiciones/terminos-condiciones.component';
 import { ContactoComponent } from './pages/static/contacto/contacto.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
-
+import { ProductoComponent } from './components/producto/producto.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
     PoliticasEnvioComponent,
     TerminosCondicionesComponent,
     ContactoComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    ProductoComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,8 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
         },
         deps: [ HttpClient ]
       }
-    })
+    }),
+    NgxSkeletonLoaderModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

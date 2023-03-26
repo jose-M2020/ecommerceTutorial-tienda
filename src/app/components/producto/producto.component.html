@@ -1,0 +1,38 @@
+<ng-container 
+  *ngIf="
+    (producto.visibilidad === 'Todo el mundo') ||
+    (currency === 'MXN' && producto.visibilidad === 'Mexico') ||
+    (currency !== 'MXN' && producto.visibilidad === 'Exterior')
+  "
+>
+  <div class="ps-product">
+    <div class="ps-product__thumbnail">
+      <img class="ps-product__image" [src]="producto.portada.secure_url" alt=""/>
+      <img class="ps-product__image-alt" [src]="producto.galeria[0].secure_url" alt=""/>
+      <a class="ps-product__overlay" [routerLink]="['/productos/'+producto.slug]" ></a>
+      <span class="ps-badge ps-badge--hot" *ngIf="producto.precio_antes_dolares >= 1 || producto.precio_antes_mexicanos >= 1">¡OFERTA!</span>    
+    </div>
+    <div class="ps-product__content"><a class="ps-product__title"[routerLink]="['/productos/'+producto.slug]" >{{producto.titulo}}</a>
+      <span><i class="text-warning fa fa-star"></i></span>
+      <span><i class="text-warning fa fa-star"></i></span>
+      <span><i class="text-warning fa fa-star"></i></span>
+      <span><i class="text-warning fa fa-star"></i></span>
+      <span><i class="text-warning fa fa-star"></i></span>
+      <p class="ps-product__price">
+        <ng-container *ngIf="currency != 'MXN'">         
+          <span class=" mr-3"><b>${{producto.precio_dolar}}</b></span>
+          <span class="text-danger" *ngIf="producto.precio_antes_dolares >= 1">
+            <del>${{producto.precio_antes_dolares}}</del>
+          </span>
+        </ng-container>
+        <ng-container *ngIf="currency == 'MXN'">
+          
+          <span class=" mr-3"><b>$MXN{{producto.precio}}</b></span>
+          <span class="text-danger" *ngIf="producto.precio_antes_mexicanos >= 1">
+            <del>$MXN{{producto.precio_antes_mexicanos}}</del>
+          </span>
+        </ng-container>
+      </p>
+    </div>
+  </div>
+</ng-container>
