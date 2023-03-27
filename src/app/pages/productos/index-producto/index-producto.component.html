@@ -144,7 +144,7 @@
           </div>
           <div class="ps-shop__filter-panel"></div>
           
-          <div class="ps-shop__content">
+          <div *ngIf="!loadingProductos; else productSkeleton" class="ps-shop__content">
             <div class="row mb-5">
               <ng-container *ngFor="let item of productos| slice: (page-1)*pageSize : (page-1) * pageSize + pageSize">
                   <div class="{{isAvailable(item.visibilidad, currency) && 'col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6'}}">
@@ -166,7 +166,35 @@
               </div>
             </div>
           </div>
-          <ngx-skeleton-loader count="1" appearance="circle"></ngx-skeleton-loader>
+          <ng-template #productSkeleton>
+            <div class="row">
+              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6" *ngFor="let item of items">
+                <ngx-skeleton-loader 
+                  [theme]="{
+                    'border-radius': '0',
+                    height: '300px'
+                  }"
+                ></ngx-skeleton-loader>
+                <ngx-skeleton-loader
+                  [theme]="{
+                    'border-radius': '0',
+                    height: '25px'
+                  }"
+                ></ngx-skeleton-loader>
+                <div class="d-flex flex-column">
+                  <ngx-skeleton-loader
+                    count="2"
+                    [theme]="{
+                      display: 'block',
+                      'border-radius': '0',
+                      height: '20px',
+                      width: '50%'
+                    }"
+                  ></ngx-skeleton-loader>
+                </div>
+              </div>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>

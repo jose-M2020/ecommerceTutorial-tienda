@@ -28,13 +28,16 @@ export class IndexProductoComponent implements OnInit {
   public mas_vendidos :Array<any> =[];
   public url =URL_SERVICES;
 
-  public productos : Array<any> =[];
-  public allProducts : Array<any> =[];
+  public productos: Array<any> =[];
+  public allProducts: Array<any> =[];
+  public loadingProductos: boolean = true;
   public sort_by = 'Defecto';
   public page = 1;
   public pageSize = 15;
   public isAvailable = isAvailable;
   
+  public items = [1,2,3,4,5,6];
+
   public route_categoria = '';
   public filtro_search = '';
   public load_data = false;
@@ -118,6 +121,7 @@ export class IndexProductoComponent implements OnInit {
   }
 
   getProducts(filter?: any){
+    this.loadingProductos = true;
     this.productos = [];
     this._guestService.listar_productos_publico().subscribe(
       response=>{
@@ -135,7 +139,7 @@ export class IndexProductoComponent implements OnInit {
           this.setBySearch();
         }
 
-        this.load_data = false;
+        this.loadingProductos = false;
       }
     );
   }

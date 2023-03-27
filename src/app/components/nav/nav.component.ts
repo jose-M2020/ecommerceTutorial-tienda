@@ -20,7 +20,54 @@ export class NavComponent implements OnInit {
   public currency = 'MXN';
   public token = localStorage.getItem('token')
 
-  public categorias :Array<any> = [];
+  public categorias :Array<any> = [
+    {
+        "titulo":"Polos",
+        "slug":"polos",
+        "_id": "1000"
+    },
+    {
+        "titulo":"Poleras",
+        "slug":"poleras",
+        "_id": "1001"
+    },
+    {
+        "titulo":"Joggers",
+        "slug":"joggers",
+        "_id": "1004"
+    },
+    {
+        "titulo":"Shorts",
+        "slug":"shorts",
+        "_id": "1005"
+    },
+    {
+        "titulo":"Camisas",
+        "slug":"camisas",
+        "_id": "1002"
+    },
+    {
+        "titulo":"Casacas",
+        "slug":"casacas",
+        "_id": "1006"
+    },
+    {
+        "titulo":"Tops",
+        "slug":"tops",
+        "_id": "1007"
+    },
+    {
+        "titulo":"Accesorios",
+        "slug":"accesorios",
+        "_id": "1003"
+    },
+    {
+        "titulo":"Packs",
+        "slug":"packs",
+        "_id": "1008"
+    }
+    
+  ];
   public user : any = undefined;
   public user_lc : any = undefined;  
 
@@ -34,8 +81,8 @@ export class NavComponent implements OnInit {
   public config: any = {};
 
   constructor(
-    private _guestService:GuestService,
-    private _router:Router
+    private _guestService: GuestService,
+    private _router: Router
   ) { 
     
     setTimeout(() => {
@@ -92,12 +139,12 @@ export class NavComponent implements OnInit {
       }
     );
 
-    this._guestService.get_categorias().subscribe(
-      response=>{
-        this.categorias = response;
+    // this._guestService.get_categorias().subscribe(
+    //   response=>{
+    //     this.categorias = response;
         
-      }
-    );
+    //   }
+    // );
   }
 
   search(){

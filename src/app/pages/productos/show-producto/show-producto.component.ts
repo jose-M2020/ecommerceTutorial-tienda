@@ -56,6 +56,8 @@ export class ShowProductoComponent implements OnInit {
   public option_nav = 1;
   public socket = io(SOCKET);
 
+  items = [1,2,3]
+
   constructor(
     private _guestService:GuestService,
     private _route:ActivatedRoute

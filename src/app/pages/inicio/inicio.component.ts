@@ -20,12 +20,15 @@ export class InicioComponent implements OnInit {
   public producto_destacado_dos :any = null;
   public producto_destacado_tres :any = null;
   public producto_destacado_cuatro :any = null;
+  public loadingDestacados: boolean = false;
   public url = URL_SERVICES;
   public productImgUrl = this.url + 'producto/portada/';
   public isAvailable = isAvailable;
 
-  public new_productos : Array<any> = [];
-
+  public new_productos: Array<any> = [];
+  public loadingNewProductos: boolean = true;
+  public items = [1,2,3,4,5,6];
+  
   constructor(
     private _guestService:GuestService
   ) { 
@@ -46,6 +49,7 @@ export class InicioComponent implements OnInit {
   }
 
   init_productos_destacados(){
+    this.loadingDestacados = true;
     this._guestService.listar_productos_destacados_publico().subscribe(
       response=>{
         this.mas_vendidos = response.data;
@@ -70,14 +74,18 @@ export class InicioComponent implements OnInit {
         }else{
           this.producto_destacado_cuatro = null;
         }
+        
+        this.loadingDestacados = false;
       }
     );
   }
 
   init_productos_nuevos(){
+    this.loadingNewProductos = true;
     this._guestService.listar_productos_nuevos_publico().subscribe(
       response=>{
         this.new_productos = response.data;
+        this.loadingNewProductos = false;
       }
     );
   }

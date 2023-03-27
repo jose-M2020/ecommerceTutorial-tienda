@@ -5,18 +5,17 @@
   <ng-container *ngIf="data">
     <div class="ps-page ps-page--product-detail">
       <div class="container">
+        <!-- Breadcumb -->
         <div class="ps-page__header">
           <ul class="ps-breadcrumb">
             <li><a [routerLink]="['/']">Home</a></li>
             <li>{{producto.titulo}}</li>
           </ul>
-    
         </div>
+        <!-- Detalled del producto -->
         <div class="ps-product--detail" id="ps-product--detail">
           <ng-container>
             <div class="ps-product__header">
-
-
               <div class="ps-product__thumbnail" data-vertical="false">
                 <figure>
                   <div class="ps-wrapper">
@@ -202,10 +201,11 @@
         </div>
       </div>
     </div>
+    <!-- Productos recomendados -->
     <div class="ps-related-products" style="margin-bottom: 80px;">
       <h3>Productos recomendados</h3>
       <div class="container">
-        <div class="row">
+        <div *ngIf="productos_rec.length; else loadingRecomendados" class="row">
           <ng-container *ngFor="let item of productos_rec">
             <div class="{{isAvailable(item.visibilidad, currency) && 'col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6'}}">
               <app-producto
@@ -215,6 +215,35 @@
             </div> 
           </ng-container>
         </div>
+        <ng-template #loadingRecomendados>
+          <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6" *ngFor="let item of items">
+              <ngx-skeleton-loader 
+                [theme]="{
+                  'border-radius': '0',
+                  height: '300px'
+                }"
+              ></ngx-skeleton-loader>
+              <ngx-skeleton-loader
+                [theme]="{
+                  'border-radius': '0',
+                  height: '25px'
+                }"
+              ></ngx-skeleton-loader>
+              <div class="d-flex flex-column">
+                <ngx-skeleton-loader
+                  count="2"
+                  [theme]="{
+                    display: 'block',
+                    'border-radius': '0',
+                    height: '20px',
+                    width: '50%'
+                  }"
+                ></ngx-skeleton-loader>
+              </div>
+            </div>
+          </div>
+        </ng-template>
       </div>
     </div>
   </ng-container>
