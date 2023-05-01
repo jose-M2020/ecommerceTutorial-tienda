@@ -87,13 +87,12 @@
       
                     </div>
                     <ng-container *ngIf="user_lc != undefined">
-                      <a *ngIf="!btn_cart" class="ps-btn ps-btn--black text-white" (click)="agregar_producto()" style="margin-right: 0px;cursor: pointer;">
-                        Agregar al carrito
-                      </a>
-                      <button *ngIf="btn_cart" type="button" class="ps-btn ps-btn--black text-white" disabled>
-                        <span class="spinner-grow spinner-grow-sm mr-2" role="status" aria-hidden="true"></span>
-                        Agregando...
-                      </button>
+                      <app-button
+                        text="Agregar al carrito"
+                        (click)="agregar_producto()"
+                        [loading]='addingItem'
+                        loadingText='Agregando...'
+                      ></app-button>
                     </ng-container>
                     <ng-container *ngIf="user_lc == undefined">
                       <a class="ps-btn ps-btn--black text-white" (click)="agregar_producto_guest()" style="margin-right: 0px;cursor: pointer;"> Agregar al carrito</a>

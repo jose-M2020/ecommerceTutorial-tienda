@@ -45,7 +45,7 @@ export class ShowProductoComponent implements OnInit {
     variedad: '',
     cantidad: 0
   };
-  public btn_cart = false;
+  public addingItem: Boolean = false;
 
   public page = 1;
   public pageSize = 15;
@@ -171,6 +171,8 @@ export class ShowProductoComponent implements OnInit {
   }
 
   agregar_producto(){
+    if(this.addingItem) return;
+
     if(this.obj_variedad_select.variedad){
       if(this.carrito_data.cantidad >= 1){
 
@@ -181,7 +183,7 @@ export class ShowProductoComponent implements OnInit {
             cantidad: this.carrito_data.cantidad,
             inventario: this.obj_variedad_select.id,
           }
-          this.btn_cart =true;
+          this.addingItem = true;
           
           this._guestService.agregar_carrito_cliente(data, this.token).subscribe(
             response=>{
@@ -194,7 +196,7 @@ export class ShowProductoComponent implements OnInit {
                     position: 'topRight',
                     message: response.message
                 });
-                this.btn_cart =false;
+                this.addingItem =false;
               }else{
 
                 iziToast.show({
@@ -206,7 +208,7 @@ export class ShowProductoComponent implements OnInit {
                     message: 'Se agregó el producto al carrito.'
                 });
                 this.socket.emit('add-carrito-add',{data:true});
-                this.btn_cart =false;
+                this.addingItem =false;
               }
             }, err => console.log(err)
           );

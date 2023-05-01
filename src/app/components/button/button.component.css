@@ -1,0 +1,115 @@
+.ps-btn, button.ps-btn {
+  display: inline-block;
+  padding: 15px 35px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  border: none;
+  font-weight: 600;
+  -webkit-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
+  text-transform: uppercase;
+  color: #ffffff;
+  background-color: #cd4040;
+  cursor: pointer; }
+  .ps-btn--rounded, button.ps-btn--rounded {
+    border-radius: 50px; }
+  .ps-btn--curve, button.ps-btn--curve {
+    border-radius: 5px; }
+  .ps-btn--outline, button.ps-btn--outline {
+    padding: 15px 36px;
+    font-size: 14px;
+    color: #222;
+    border: 2px solid #222;
+    text-transform: uppercase;
+    background-color: transparent; }
+    .ps-btn--outline:hover, button.ps-btn--outline:hover {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #ffffff; }
+  .ps-btn--fullwidth, button.ps-btn--fullwidth {
+    width: 100%;
+    text-align: center; }
+  .ps-btn--sm, button.ps-btn--sm {
+    padding: .5rem 2rem;
+    font-size: 1.2rem; }
+    .ps-btn--sm.ps-btn--curve, button.ps-btn--sm.ps-btn--curve {
+      border-radius: 3px; }
+  .ps-btn--lg, button.ps-btn--lg {
+    padding: 1.5rem 4rem; }
+  .ps-btn--xl, button.ps-btn--xl {
+    padding: 2rem 6rem;
+    font-size: 1.6rem; }
+  .ps-btn--reverse, button.ps-btn--reverse {
+    background-color: #576391; }
+    .ps-btn--reverse:hover, button.ps-btn--reverse:hover {
+      background-color: #222222; }
+  .ps-btn--gray, button.ps-btn--gray {
+    background-color: #e5e5e5;
+    color: #000000;
+    font-size: 1.6rem; }
+  .ps-btn--black, button.ps-btn--black {
+    background-color: #222; }
+    .ps-btn--black.ps-btn--outline, button.ps-btn--black.ps-btn--outline {
+      background-color: transparent;
+      border: 2px solid #222;
+      color: #222; }
+      .ps-btn--black.ps-btn--outline:hover, button.ps-btn--black.ps-btn--outline:hover {
+        background-color: #222;
+        color: #ffffff; }
+  .ps-btn:hover, .ps-btn:active, button.ps-btn:hover, button.ps-btn:active {
+    color: #fff;
+    background-color: var(--color-primary); }
+    .ps-btn:hover.ps-btn--black, .ps-btn:active.ps-btn--black, button.ps-btn:hover.ps-btn--black, button.ps-btn:active.ps-btn--black {
+      background-color: var(--color-primary); }
+
+.ps-btn--close {
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  -webkit-transition: all .4s ease;
+  -o-transition: all .4s ease;
+  transition: all .4s ease;
+  border-radius: 50%; }
+  .ps-btn--close:before, .ps-btn--close:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 50%;
+    background-color: #9f9a98;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    -webkit-transition: all .4s ease;
+    -o-transition: all .4s ease;
+    transition: all .4s ease; }
+  .ps-btn--close:before {
+    -webkit-transform: translate(-50%, -50%) rotate(45deg);
+    -moz-transform: translate(-50%, -50%) rotate(45deg);
+    -ms-transform: translate(-50%, -50%) rotate(45deg);
+    -o-transform: translate(-50%, -50%) rotate(45deg);
+    transform: translate(-50%, -50%) rotate(45deg); }
+  .ps-btn--close:after {
+    -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+    -moz-transform: translate(-50%, -50%) rotate(-45deg);
+    -ms-transform: translate(-50%, -50%) rotate(-45deg);
+    -o-transform: translate(-50%, -50%) rotate(-45deg);
+    transform: translate(-50%, -50%) rotate(-45deg); }
+  .ps-btn--close:hover {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg); }
+    .ps-btn--close:hover:before, .ps-btn--close:hover:after {
+      background-color: #f44336;
+      -webkit-transition-delay: .3s;
+      -o-transition-delay: .3s;
+      transition-delay: .3s; }
+

@@ -112,9 +112,13 @@
                                 </div>
                                
                                 <div class="col-sm-12">
-                                  <button type="submit" class="ps-btn ps-btn--fullwidth ps-btn--black">Guardar</button>
+                                  <app-button
+                                    text="Guardar"
+                                    btnType="submit"
+                                    [loading]="isPosting"
+                                    loadingText='Guardando...'
+                                  ></app-button>
                                 </div>
-                                
                               </div>
                             </div>
                           </div>

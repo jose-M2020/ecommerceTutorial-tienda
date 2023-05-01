@@ -36,6 +36,7 @@ import { ContactoComponent } from './pages/static/contacto/contacto.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { ProductoComponent } from './components/producto/producto.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     ContactoComponent,
     NotfoundComponent,
     ProductoComponent,
+    ButtonComponent,
   ],
   imports: [
     BrowserModule,

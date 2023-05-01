@@ -14,6 +14,7 @@ export class CuentaComponent implements OnInit {
   public cliente : any = {};
   public id :any = '';
   public token :any = '';
+  public isUpdating = false;
 
   constructor(
     private _guestService:GuestService,
@@ -35,7 +36,10 @@ export class CuentaComponent implements OnInit {
   }
 
   actualizar(actualizarForm:any){
+    if(this.isUpdating) return;
+
     if(actualizarForm.valid){
+      this.isUpdating = true;
       this.cliente.password = $('#input_password').val();
       this._guestService.actualizar_perfil_cliente_guest(this.id,this.cliente,this.token).subscribe(
         response=>{
@@ -47,7 +51,7 @@ export class CuentaComponent implements OnInit {
               position: 'topRight',
               message: 'Se actualizo su perfil correctamente.'
           });
-          
+         this.isUpdating = false; 
         }
       );
       

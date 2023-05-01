@@ -181,8 +181,19 @@
                         <span *ngIf="currency == 'MXN'">$MXN{{subtotal}}</span>
                     </strong></h3>
                       <figure  *ngIf="carrito_logout.length != 0">
-                          <a class="ps-btn ps-btn--outline"  [routerLink]="['/carrito']">Carrito</a>
-                          <a class="ps-btn ps-btn--black" *ngIf="user_lc != undefined" [routerLink]="['/checkout']">Checkout</a>
+                          <!-- <a class="ps-btn ps-btn--outline"  [routerLink]="['/carrito']">Carrito</a> -->
+                          <!-- <a class="ps-btn ps-btn--black" *ngIf="user_lc != undefined" [routerLink]="['/checkout']">Checkout</a> -->
+                          
+                          <app-button
+                            text="Carrito"
+                            path="/carrito"
+                            class="ps-btn--outline"
+                          ></app-button>
+                          <app-button
+                            *ngIf="user_lc"
+                            text="Checkout"
+                            path="/checkout"
+                          ></app-button>
                       </figure>
                       <br> 
                       <ng-container>

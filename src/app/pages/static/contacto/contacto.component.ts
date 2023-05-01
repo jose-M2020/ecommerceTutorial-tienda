@@ -11,7 +11,7 @@ declare var iziToast:any;
 export class ContactoComponent implements OnInit {
 
   public contacto: any = {};
-  public load_btn = false;
+  public isPosting = false;
   constructor(
     private _guestService:GuestService,
     private _router:Router
@@ -21,8 +21,10 @@ export class ContactoComponent implements OnInit {
   ngOnInit(): void {
   }
   registro(registroForm:any){
+    if(this.isPosting) return;
+
     if(registroForm.valid){
-      this.load_btn = true;
+      this.isPosting = true;
       this._guestService.enviar_mensaje_contacto(this.contacto).subscribe(
         response=>{
           console.log(response);
@@ -35,8 +37,8 @@ export class ContactoComponent implements OnInit {
               message: 'Se envió correctamente el mensaje.'
           });
           this.contacto = {};
-          this.load_btn = false;
-        }
+          this.isPosting = false;
+        }, error => this.isPosting = false
       );
     }else{
       iziToast.show({

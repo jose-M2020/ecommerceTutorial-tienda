@@ -1,0 +1,28 @@
+<ng-container *ngIf="path; else elseBlock">
+  <a
+    [class]="'ps-btn ps-btn--black text-white ' + class"
+    style="margin-right: 0px;cursor: pointer;"
+    [routerLink]="[path]"
+  >
+    {{ text }}
+  </a>
+</ng-container>
+<ng-template #elseBlock>
+  <button
+    [class]="'ps-btn ps-btn--black text-white mr-0 ' + class"
+    [ngStyle]="{
+      'cursor': loading ? 'auto' : 'pointer',
+      'pointer-events': loading ? 'none' : 'auto'
+    }"
+    [type]="btnType"
+    [disabled]="loading"
+  >
+    <ng-container *ngIf="!loading; else loadingDiv">
+      {{ text }}
+    </ng-container>
+    <ng-template #loadingDiv>
+      <span class="spinner-grow spinner-grow-sm mr-2" role="status" aria-hidden="true"></span>
+      {{ loadingText }}
+    </ng-template>
+  </button>
+</ng-template>

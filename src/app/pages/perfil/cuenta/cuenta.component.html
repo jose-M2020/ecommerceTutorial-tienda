@@ -65,9 +65,13 @@
                   </div>
                   
                   <div class="col-sm-12">
-                    <button type="submit" class="ps-btn ps-btn--fullwidth ps-btn--black">Actualizar perfil</button>
+                    <app-button
+                        text="Actualizar perfil"
+                        btnType="submit"
+                        [loading]='isUpdating'
+                        loadingText='Actualizando...'
+                      ></app-button>
                   </div>
-                  
                 </div>
               </div>
             </div>

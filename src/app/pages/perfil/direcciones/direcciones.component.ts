@@ -39,6 +39,7 @@ export class DireccionesComponent implements OnInit {
 
   public load_data = true;
   public op = 1;
+  public isPosting = false;
 
   constructor(
     private _guestService:GuestService
@@ -89,71 +90,9 @@ export class DireccionesComponent implements OnInit {
   }
 
   registrar(registroForm:any){
-    if(registroForm.valid){
-      
-      this.regiones_arr.forEach(element => {
-        if(parseInt(element.id) == parseInt(this.direccion.region)){
-          this.direccion.region = element.name;
-        }
-      });
+    if(this.isPosting) return;
 
-      this.provincias_arr.forEach(element => {
-        if(parseInt(element.id) == parseInt(this.direccion.provincia)){
-          this.direccion.provincia = element.name;
-        }
-      });
-
-      this.distritos_arr.forEach(element => {
-        if(parseInt(element.id) == parseInt(this.direccion.distrito)){
-          this.direccion.distrito = element.name;
-        }
-      });
-
-      let data = {
-        nombres: this.direccion.nombres,
-        apellidos: this.direccion.nombres,
-        dni: this.direccion.dni,
-        zip: this.direccion.zip,
-        direccion: this.direccion.direccion,
-        referencia: this.direccion.referencia,
-        telefono: this.direccion.telefono,
-        pais: this.direccion.pais,
-        zona: this.direccion.zona,
-        region: this.direccion.region,
-        provincia: this.direccion.provincia,
-        distrito: this.direccion.distrito,
-        principal: this.direccion.principal,
-        cliente: localStorage.getItem('_id')
-      }
-
-      console.log(data);
-      this._guestService.registro_direccion_cliente(data,this.token).subscribe(
-        response=>{
-          this.direccion = {
-            pais: '',
-            region: '',
-            provincia: '',
-            distrito: '',
-            principal: false,
-            referencia: ''
-          };
-          $('#sl-region').prop('disabled', true);
-          $('#sl-provincia').prop('disabled', true);
-          $('#sl-distrito').prop('disabled', true);
-          this.obtener_direccion();
-          iziToast.show({
-              title: 'SUCCESS',
-              titleColor: '#1DC74C',
-              color: '#FFF',
-              class: 'text-success',
-              position: 'topRight',
-              message: 'Se agregó la nueva direccion correctamente.'
-          });
-        }
-      );
-     
-
-    }else{
+    if(!registroForm.valid){
       iziToast.show({
         title: 'ERROR',
         titleColor: '#FF0000',
@@ -161,8 +100,71 @@ export class DireccionesComponent implements OnInit {
         class: 'text-danger',
         position: 'topRight',
         message: 'Los datos del formulario no son validos'
-    });
+      });
+      return;
     }
+    
+    this.isPosting = true;
+    this.regiones_arr.forEach(element => {
+      if(parseInt(element.id) == parseInt(this.direccion.region)){
+        this.direccion.region = element.name;
+      }
+    });
+
+    this.provincias_arr.forEach(element => {
+      if(parseInt(element.id) == parseInt(this.direccion.provincia)){
+        this.direccion.provincia = element.name;
+      }
+    });
+
+    this.distritos_arr.forEach(element => {
+      if(parseInt(element.id) == parseInt(this.direccion.distrito)){
+        this.direccion.distrito = element.name;
+      }
+    });
+
+    let data = {
+      nombres: this.direccion.nombres,
+      apellidos: this.direccion.nombres,
+      dni: this.direccion.dni,
+      zip: this.direccion.zip,
+      direccion: this.direccion.direccion,
+      referencia: this.direccion.referencia,
+      telefono: this.direccion.telefono,
+      pais: this.direccion.pais,
+      zona: this.direccion.zona,
+      region: this.direccion.region,
+      provincia: this.direccion.provincia,
+      distrito: this.direccion.distrito,
+      principal: this.direccion.principal,
+      cliente: localStorage.getItem('_id')
+    }
+
+    this._guestService.registro_direccion_cliente(data,this.token).subscribe(
+      response=>{
+        this.direccion = {
+          pais: '',
+          region: '',
+          provincia: '',
+          distrito: '',
+          principal: false,
+          referencia: ''
+        };
+        $('#sl-region').prop('disabled', true);
+        $('#sl-provincia').prop('disabled', true);
+        $('#sl-distrito').prop('disabled', true);
+        this.obtener_direccion();
+        iziToast.show({
+            title: 'SUCCESS',
+            titleColor: '#1DC74C',
+            color: '#FFF',
+            class: 'text-success',
+            position: 'topRight',
+            message: 'Se agregó la nueva direccion correctamente.'
+        });
+        this.isPosting =  false;
+      }
+    );
   }
  
   select_pais(){

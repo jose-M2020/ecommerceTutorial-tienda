@@ -17,6 +17,9 @@ export class LoginComponent implements OnInit {
   public new_user : any = {};
   public op = 1;
   public carrito_logout :Array<any> = [];
+  
+  public isLoggin: boolean = false;
+  public isRegistering: boolean = false;
 
   constructor(
     private _guestService:GuestService,
@@ -34,8 +37,9 @@ export class LoginComponent implements OnInit {
   }
 
   func_login(loginForm:any){
+    if(this.isLoggin) return;
+
     if(loginForm.valid){
-      
       this.login(this.user.email,this.user.password);
       
     }else{
@@ -51,6 +55,8 @@ export class LoginComponent implements OnInit {
   }
 
   login(email:any,password:any){
+    this.isLoggin = true;
+
     let data : any= {
       email: email,
       password: password
@@ -86,17 +92,20 @@ export class LoginComponent implements OnInit {
             window.location.reload();
           })
         }
-       
+        
+        this.isLoggin = false;
       },
       error=>{
         console.log(error);
+        this.isLoggin = false;
       }
     );
   }
 
   registro(registroForm:any){
+    if(this.isRegistering) return;
+    
     if(registroForm.valid){
-     
       if(this.new_user.password.length <=5){
         iziToast.show({
             title: 'ERROR',
@@ -107,12 +116,9 @@ export class LoginComponent implements OnInit {
             message: 'La contraseña debe tener mas de 5 caracteres'
         });
       }else{
-        console.log(this.new_user);
-        
+        this.isRegistering = true;
         this._guestService.registro_cliente(this.new_user).subscribe(
           response=>{
-            console.log(response);
-            
             if(response.data != undefined){
               iziToast.show({
                   title: 'SUCCESS',
@@ -120,7 +126,7 @@ export class LoginComponent implements OnInit {
                   color: '#FFF',
                   class: 'text-success',
                   position: 'topRight',
-                  message: 'Se registro correctamente en Prágol.'
+                  message: 'Se registro correctamente en Shoper.'
               });
               this.user.email = this.new_user.email;
               this.user.password = this.new_user.password;
@@ -133,9 +139,11 @@ export class LoginComponent implements OnInit {
                 class: 'text-danger',
                 position: 'topRight',
                 message: response.message
-            });
+              });
             }
-          }
+            this.isRegistering = false;
+          },
+          error => { this.isRegistering = false }
         );
       }
             
