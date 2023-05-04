@@ -1,6 +1,6 @@
 <ng-container *ngIf="path; else elseBlock">
   <a
-    [class]="'ps-btn ps-btn--black text-white ' + class"
+    [class]="'ps-btn ps-btn--curve ' + class"
     style="margin-right: 0px;cursor: pointer;"
     [routerLink]="[path]"
   >
@@ -9,7 +9,7 @@
 </ng-container>
 <ng-template #elseBlock>
   <button
-    [class]="'ps-btn ps-btn--black text-white mr-0 ' + class"
+    [class]="'ps-btn ps-btn--curve ' + class"
     [ngStyle]="{
       'cursor': loading ? 'auto' : 'pointer',
       'pointer-events': loading ? 'none' : 'auto'

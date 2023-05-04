@@ -57,7 +57,7 @@ export class CheckoutComponent implements OnInit {
 
   public direccion_envio : any = undefined;
   public metodo_pago = '';
-  public btn_load = false;
+  public isProcessingPurchase: Boolean = false;
 
   /***************************** */
 
@@ -173,10 +173,10 @@ export class CheckoutComponent implements OnInit {
         let idcliente = localStorage.getItem('_id');
         this.venta.cliente = idcliente;
 
-        this.btn_load = true;
+        this.isProcessingPurchase = true;
         this._guestService.registro_compra_cliente(this.venta,this.token).subscribe(
           response=>{
-            this.btn_load = false;
+            this.isProcessingPurchase = false;
             this._router.navigate(['/cuenta/pedidos/'+response.data._id]);
           },
           error=>{
@@ -443,6 +443,9 @@ export class CheckoutComponent implements OnInit {
   }
 
   get_token_culqi(){
+    if(this.isProcessingPurchase) return;
+    
+    this.isProcessingPurchase = true;
     this._guestService.comprobar_carrito_cliente({detalles:this.dventa},this.token).subscribe(
       response=>{
         if(response.venta){
@@ -494,7 +497,7 @@ export class CheckoutComponent implements OnInit {
             response=>{
               console.log(response);
               window.location.href =response.sandbox_init_point;
-              
+              this.isProcessingPurchase = false;
             }
           );
         }else{
@@ -506,13 +509,16 @@ export class CheckoutComponent implements OnInit {
               position: 'topRight',
               message: response.message
           });
-          this.btn_load = false;
+          this.isProcessingPurchase = false;
         }
-      }
+      },
+      error => this.isProcessingPurchase = false
     );
   }
 
   generar_pedido(tipo:any){
+    if(this.isProcessingPurchase) return;
+
     this.venta.transaccion = 'Venta pedido';
     this.venta.currency = this.currency === this.defaultCurrency ? this.defaultCurrency : 'USD';
     this.venta.subtotal = this.subtotal;
@@ -528,13 +534,13 @@ export class CheckoutComponent implements OnInit {
     this.venta.cliente = idcliente;
     // console.log(this.venta);
     
-    this.btn_load = true;
+    this.isProcessingPurchase = true;
     this._guestService.pedido_compra_cliente(this.venta,this.token).subscribe(
       response=>{
         // console.log(response);
         
         if(response.venta != undefined){
-          this.btn_load = false;
+          this.isProcessingPurchase = false;
           this._router.navigate(['/cuenta/pedidos',response.venta._id]);
         }else{
           iziToast.show({
@@ -545,7 +551,7 @@ export class CheckoutComponent implements OnInit {
               position: 'topRight',
               message: response.message
           });
-          this.btn_load = false;
+          this.isProcessingPurchase = false;
         }
       }
     );

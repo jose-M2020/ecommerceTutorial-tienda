@@ -13,10 +13,11 @@ import { SOCKET, URL_SERVICES } from 'src/environments/environment';
 })
 export class CarritoComponent implements OnInit {
 
-  public carrito_arr : Array<any> = [];
-  public carrito_logout :Array<any> = [];
+  public userCart : Array<any> = [];
+  public guestCart: Array<any> = [];
   public url = URL_SERVICES;
   public productImgUrl = this.url + 'producto/portada/';
+  public currentCart: Array<any> = [];
 
   public geo : any = {};
   public country = '';
@@ -37,6 +38,7 @@ export class CarritoComponent implements OnInit {
   public regiones_arr:Array<any> = [];
   public provincias_arr:Array<any> = [];
   public distritos_arr:Array<any> = [];
+
 
   public direccion : any = {
     pais: '',
@@ -67,21 +69,20 @@ export class CarritoComponent implements OnInit {
     if(this.token){
       let obj_lc :any= localStorage.getItem('user_data');
       this.user_lc = JSON.parse(obj_lc);
-      this.obtener_carrito();
+      this.getCart();
     }
 
     if(this.user_lc == undefined){
-      let ls_cart = localStorage.getItem('cart');
-      if(ls_cart != null){
-        this.carrito_logout = JSON.parse(ls_cart);
-        this.calcular_carrito();
+      let lsCart = localStorage.getItem('cart');
+      if(lsCart != null){
+        this.guestCart = JSON.parse(lsCart);
+        this.calculateCart();
       }else{
-        this.carrito_logout = [];
+        this.guestCart = [];
       }
-      
-    }
 
-    
+      this.currentCart = this.guestCart;
+    }
   }
 
   init_zonas(){
@@ -125,40 +126,40 @@ export class CarritoComponent implements OnInit {
       if(this.user_lc == undefined){
         let ls_cart = localStorage.getItem('cart');
         if(ls_cart != null){
-          this.carrito_logout = JSON.parse(ls_cart);
-          this.calcular_carrito();
+          this.guestCart = JSON.parse(ls_cart);
+          this.calculateCart();
         }else{
-          this.carrito_logout = [];
+          this.guestCart = [];
         }
         
       }else{
-        this.obtener_carrito();
+        this.getCart();
       }
     });
   }
 
-  calcular_carrito(){
+  calculateCart(){
     this.subtotal = 0;
     if(this.user_lc != undefined){
       if(this.currency == 'MXN'){
-        this.carrito_arr.forEach(element => {
+        this.userCart.forEach(element => {
             let sub_precio = parseInt(element.producto.precio) * element.cantidad;
             this.subtotal = this.subtotal + sub_precio;
         });
       }else{
-        this.carrito_arr.forEach(element => {
+        this.userCart.forEach(element => {
           let sub_precio = parseInt(element.producto.precio_dolar) * element.cantidad;
           this.subtotal = this.subtotal + sub_precio;
       });
       }
     }else if(this.user_lc == undefined){
       if(this.currency == 'MXN'){
-        this.carrito_logout.forEach(element => {
+        this.guestCart.forEach(element => {
           let sub_precio = parseInt(element.producto.precio) * element.cantidad;
             this.subtotal = this.subtotal + sub_precio;
         });
       }else{
-        this.carrito_logout.forEach(element => {
+        this.guestCart.forEach(element => {
           let sub_precio = parseInt(element.producto.precio_dolar) * element.cantidad;
             this.subtotal = this.subtotal + sub_precio;
         });
@@ -167,12 +168,12 @@ export class CarritoComponent implements OnInit {
     this.subtotal_const = this.subtotal;
   }
 
-  eliminar_item_guest(item:any){
+  deleteGuestItem(item:any){
     this.total_pagar  = 0;
-    this.carrito_logout.splice(item._id,1);
+    this.guestCart.splice(item._id,1);
     localStorage.removeItem('cart');
-    if(this.carrito_logout.length >= 1){
-      localStorage.setItem('cart',JSON.stringify(this.carrito_logout));
+    if(this.guestCart.length >= 1){
+      localStorage.setItem('cart',JSON.stringify(this.guestCart));
     }
     if(this.currency == 'MXN'){
       let monto = item.producto.precio*item.cantidad;
@@ -185,7 +186,7 @@ export class CarritoComponent implements OnInit {
     this.subtotal_const = this.subtotal;
   }
 
-  select_pais(){
+  selectCountry(){
     let str_select_pais = this.str_pais.split('_');
     let pais =str_select_pais[0];
     this.direccion.zona = str_select_pais[1];
@@ -234,7 +235,7 @@ export class CarritoComponent implements OnInit {
     }
   }
 
-  select_region(){
+  selectRegion(){
     this.total_pagar  = 0;
     this.provincias = [];
     setTimeout(() => {
@@ -254,16 +255,17 @@ export class CarritoComponent implements OnInit {
     
   }
 
-  obtener_carrito(){
-    this._guestService.obtener_carrito_cliente(this.user_lc._id,this.token).subscribe(
+  async getCart(){
+    await this._guestService.obtener_carrito_cliente(this.user_lc._id,this.token).subscribe(
       response=>{
-        this.carrito_arr = response.data;
-        this.calcular_carrito();
+        this.userCart = response.data;
+        this.calculateCart();
+        this.currentCart = this.userCart;
       }
     );
   }
 
-  eliminar_item(id:any){
+  deleteItem(id:any){
     this.total_pagar  = 0;
     this._guestService.eliminar_carrito_cliente(id,this.token).subscribe(
       response=>{
@@ -275,7 +277,7 @@ export class CarritoComponent implements OnInit {
             position: 'topRight',
             message: 'Se eliminó el producto correctamente.'
         });
-        this.obtener_carrito();
+        this.getCart();
         this.socket.emit('delete-carrito',{data:response.data});
       }
     );

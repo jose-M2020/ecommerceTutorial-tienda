@@ -1,11 +1,6 @@
-<div class="row"
+<div class="banner row"
      *ngIf="config.envio.envio_activacion != 'Desactivado'" 
-     style="
-        right: 0;
-        left: 0;
-        z-index: 1030;
-        background: #f1ee51;
-        color:#191919">
+>
     <div class="col-12 text-center">
         ENVIO GRATIS POR COMPRAS MAYORES A
         <span *ngIf="currency == 'MXN'">$MXN{{config.envio.monto_min_mexicanos}}</span>
@@ -13,7 +8,7 @@
     </div>
 </div>
 
-<header class="header header--standard" data-sticky="true" style="background: #127c5f !important;">   
+<header class="header header--standard" data-sticky="true">   
     <div class="header__left">
         <a class="ps-logo" [routerLink]="['/']" routerLinkActive="router-link-active">
             <img *ngIf="config" src="{{ config.logo.secure_url }}" alt="Logo" style="width:150px;">
@@ -23,9 +18,9 @@
         
         <div class="header__navigation">
             <ul class="menu">
-                <li><a class="text-white" [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'menu.item_uno' | translate }}</a></li>
+                <li><a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'menu.item_uno' | translate }}</a></li>
                 <li class="menu-item-has-children">
-                      <a class="text-white" style="cursor: pointer;" [routerLink]="['/productos']" >
+                      <a style="cursor: pointer;" [routerLink]="['/productos']" >
                           {{ 'menu.item_dos' | translate }}
                       </a>
                     <span class="sub-toggle"></span>
@@ -45,7 +40,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="menu-item-has-children"><a style="cursor: pointer;" class="text-white">{{ 'menu.item_tres' | translate }}</a><span class="sub-toggle"></span>
+                <li class="menu-item-has-children"><a style="cursor: pointer;">{{ 'menu.item_tres' | translate }}</a><span class="sub-toggle"></span>
                   <ul class="sub-menu">
                       <li>
                           <a [routerLink]="['/nosotros']">{{ 'menu.item_siete' | translate }}</a>
@@ -54,46 +49,45 @@
                       </li>
                   </ul>
               </li>
-                <li><a class="text-white" [routerLink]="['/contacto']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'menu.item_cuatro' | translate }}</a></li>
+                <li><a [routerLink]="['/contacto']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{ 'menu.item_cuatro' | translate }}</a></li>
             </ul>
         </div>
         <div class="header__container">
           <div class="header__search">
               <form class="ps-form--header-search" >
                   <input id="input_search" class="form-control" type="text" placeholder="{{ 'menu.item_cinco' | translate }}" name="filtro_search" [(ngModel)]="filtro_search">
-                  <button type="button" (click)="search()" class="text-white"><i  class="icon-magnifier"></i></button>
+                  <button type="button" (click)="search()"><i  class="icon-magnifier"></i></button>
               </form>
               <a class="header__search-mini" href="#"><i class="icon-magnifier"></i></a>
           </div>
             <div class="header__actions">
                   <ng-container *ngIf="user_lc != undefined">
-                      <a class="header__user text-white" [routerLink]="['/cuenta/perfil']"><i class="icon-user"></i></a>
-                      
+                      <a class="header__user" [routerLink]="['/cuenta/perfil']"><i class="icon-user"></i></a>
                   </ng-container>
                   <ng-container *ngIf="user_lc == undefined">
-                      <a class="header__user text-white" [routerLink]="['/login']"><i class="icon-user"></i>
+                      <a class="header__user" [routerLink]="['/login']"><i class="icon-user"></i>
                         </a>
                   </ng-container>
   
                   <ng-container *ngIf="user_lc != undefined">
                       <a class="header__cart ps-toggle--sidebar" (click)="openCart()">
-                          <i class="icon-cart text-white"></i><span  style="background: #f1ee51;color:black">{{carrito_arr.length}}</span>
+                          <i class="icon-cart"></i><span>{{carrito_arr.length}}</span>
                       </a>
                   </ng-container>
                   <ng-container *ngIf="user_lc == undefined">
                       <a class="header__cart ps-toggle--sidebar" (click)="openCart()">
-                          <i class="icon-cart text-white"></i><span  style="background: #f1ee51;color:black">{{carrito_logout.length}}</span>
+                          <i class="icon-cart"></i><span>{{carrito_logout.length}}</span>
                       </a>
                   </ng-container>
   
                 
-                <a class="header__menu-toggle ps-toggle--sidebar text-white" style="cursor: pointer;" (click)="openMenu()"><i class="icon-menu"></i></a>
+                <a class="header__menu-toggle ps-toggle--sidebar" style="cursor: pointer;" (click)="openMenu()"><i class="icon-menu"></i></a>
             </div>
         </div>
     </div>
 </header>
 
-<header class="header header--mobile" data-sticky="true" style="background: #127c5f;" >
+<header class="header header--mobile" data-sticky="true" style="background: #f1f2f8;" >
     <div class="header__left">
         <a class="ps-logo py-3" [routerLink]="['/']" routerLinkActive="router-link-active" >
             <!-- <img src="assets/img/logo-res.png" alt=""> -->
@@ -103,22 +97,22 @@
     <div class="header__right">
         <div class="header__actions">
                 <ng-container *ngIf="user_lc != undefined">
-                    <a class="header__user text-white" [routerLink]="['/cuenta/perfil']"><i class="icon-user"></i></a>
+                    <a class="header__user" [routerLink]="['/cuenta/perfil']"><i class="icon-user"></i></a>
                 </ng-container>
                 <ng-container *ngIf="user_lc == undefined">
-                    <a class="header__user text-white" [routerLink]="['/login']"><i class="icon-user"></i></a>
+                    <a class="header__user" [routerLink]="['/login']"><i class="icon-user"></i></a>
                 </ng-container>
                 <ng-container *ngIf="user_lc != undefined">
-                    <a class="header__cart ps-toggle--sidebar text-white" (click)="openCart()">
+                    <a class="header__cart ps-toggle--sidebar" (click)="openCart()">
                         <i class="icon-cart"></i><span>{{carrito_arr.length}}</span>
                     </a>
                 </ng-container>
                 <ng-container *ngIf="user_lc == undefined">
-                    <a class="header__cart ps-toggle--sidebar text-white" (click)="openCart()">
+                    <a class="header__cart ps-toggle--sidebar" (click)="openCart()">
                         <i class="icon-cart"></i><span>{{carrito_logout.length}}</span>
                     </a>
                 </ng-container>
-            <a class="header__menu-toggle ps-toggle--sidebar text-white" style="cursor: pointer;" (click)="openMenu()"><i class="icon-menu"></i></a>
+            <a class="header__menu-toggle ps-toggle--sidebar" style="cursor: pointer;" (click)="openMenu()"><i class="icon-menu"></i></a>
         </div>
     </div>
 </header>
@@ -181,16 +175,13 @@
                         <span *ngIf="currency == 'MXN'">$MXN{{subtotal}}</span>
                     </strong></h3>
                       <figure  *ngIf="carrito_logout.length != 0">
-                          <!-- <a class="ps-btn ps-btn--outline"  [routerLink]="['/carrito']">Carrito</a> -->
-                          <!-- <a class="ps-btn ps-btn--black" *ngIf="user_lc != undefined" [routerLink]="['/checkout']">Checkout</a> -->
-                          
                           <app-button
                             text="Carrito"
                             path="/carrito"
                             class="ps-btn--outline"
                           ></app-button>
                           <app-button
-                            *ngIf="user_lc"
+                            *ngIf="user_lc != undefined"
                             text="Checkout"
                             path="/checkout"
                           ></app-button>
@@ -262,8 +253,16 @@
                     </strong></h3>
                   
                     <figure *ngIf="carrito_arr.length != 0">
-                        <a class="ps-btn ps-btn--outline"  [routerLink]="['/carrito']">Carrito</a>
-                        <a class="ps-btn ps-btn--black" *ngIf="user_lc != undefined" [routerLink]="['/checkout']">Checkout</a>
+                        <app-button
+                          text="Carrito"
+                          path="/carrito"
+                          class="reset-style ps-btn--outline ps-btn--fullwidth mb-3"
+                        ></app-button>
+                        <app-button
+                          *ngIf="user_lc != undefined"
+                          text="Checkout"
+                          path="/checkout"
+                        ></app-button>
                       </figure>
                 </div>
             </div>

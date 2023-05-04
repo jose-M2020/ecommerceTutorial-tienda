@@ -7,6 +7,7 @@ declare var iziToast:any;
 import { io } from "socket.io-client";
 import { SOCKET, URL_SERVICES } from 'src/environments/environment';
 import { isAvailable } from 'src/app/helpers/producto';
+import { calcAverageRating } from '../../../helpers/producto';
 declare var $:any;
 declare function productLightbox():any;
 declare function slickConfig():any;
@@ -30,7 +31,10 @@ export class ShowProductoComponent implements OnInit {
   public producto : any = {};
   public url = URL_SERVICES;
   public urlImg = this.url + 'producto/portada/';
-  public reviews :Array<any> = [];
+  public reviews: Array<any> = [];
+  public rating: any = {
+    averageRating: 0
+  };
 
   public isAvailable = isAvailable;
 
@@ -108,6 +112,7 @@ export class ShowProductoComponent implements OnInit {
               this._guestService.obtener_reviews_producto_publico(this.producto._id).subscribe(
                 response=>{
                   this.reviews = response.data;
+                  this.rating.averageRating = calcAverageRating(this.reviews);
                 }
               );
 
@@ -170,7 +175,7 @@ export class ShowProductoComponent implements OnInit {
     );
   }
 
-  agregar_producto(){
+  addItemToCart(){
     if(this.addingItem) return;
 
     if(this.obj_variedad_select.variedad){
@@ -244,7 +249,7 @@ export class ShowProductoComponent implements OnInit {
   }
   }
 
-  agregar_producto_guest(){
+  addItemToGuestCart(){
     if(this.obj_variedad_select.variedad){
      
 

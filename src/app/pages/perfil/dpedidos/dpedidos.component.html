@@ -212,7 +212,14 @@
                                                       (rate)="onRate($event)"></star-rating>
                                                     </div>  
                                                     <div class="col-lg-5">
-                                                      <button class="ps-btn ps-btn--outline" style="font-size: 13px !important;    margin-top: 1.5rem;" type="button" (click)="emitir(item._id)">Enviar reseña</button>
+                                                      <app-button
+                                                        text="Enviar reseña"
+                                                        (click)="addReview(item._id)"
+                                                        class="p-3 mt-4"
+                                                        [loading]="isPostingReview"
+                                                        loadingText="Enviando..."
+                                                      >
+                                                      </app-button>
                                                     </div>
                                                   </div>
                                                 </div>

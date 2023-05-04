@@ -1,9 +1,9 @@
 footer.ps-footer--2.ps-footer--fullwidth {
-    background: #127c5f !important;
+    background: #f7f8fa !important;
 }
 
 *{
-    color: white;
+    color: var(--text-dark);
 }
 
 option{

@@ -106,7 +106,11 @@
                                 </div>
                                
                                 <div class="col-sm-12">
-                                  <button type="submit" class="ps-btn ps-btn--fullwidth ps-btn--black">Crear dirección</button>
+                                  <app-button
+                                    text="Crear dirección"
+                                    btnType="submit"
+                                    class="ps-btn--fullwidth"
+                                  ></app-button>
                                 </div>
                                 
                             </div>
@@ -169,8 +173,11 @@
                       </div>
 
                         <figure style="margin-top: 30px;">
-                            <a class="ps-btn ps-btn--outline" [routerLink]="['/cuenta/direcciones']" >Nueva dirección</a>
-  
+                          <app-button
+                            text="Nueva dirección"
+                            path="/cuenta/direcciones"
+                            class="reset-style ps-btn--outline"
+                          ></app-button>
                         </figure>
                   </ng-container>
                   <!-- Agregar Cupon -->
@@ -280,15 +287,25 @@
                         <ng-container *ngIf="direccion_envio != undefined">
                             <ng-container *ngIf="carrito_arr.length >= 1">
                                 <div class="ps-block__bottom" *ngIf="metodo_pago == 'Tarjeta de crédito'">
-                                  <a *ngIf="!btn_load" class="ps-btn ps-btn--black" id="btnBuy" style="cursor: pointer;" (click)="get_token_culqi()">Procesar pago</a>
-                                  <button *ngIf="btn_load" class="ps-btn ps-btn--black btnBuy" style="cursor: pointer;" disabled>Procesando...</button>
+                                  <app-button
+                                    text="Procesar pago"
+                                    (click)="get_token_culqi()"
+                                    id="btnBuy"
+                                    class="ps-btn--fullwidth"
+                                    [loading]="isProcessingPurchase"
+                                    loadingText="Procesando..."
+                                  ></app-button>
                                 </div>
-                                <div class="ps-block__bottom" *ngIf="metodo_pago == 'PayPal'">
-                                    
-                                </div>
+                                <div class="ps-block__bottom" *ngIf="metodo_pago == 'PayPal'"></div>
                                 <div class="ps-block__bottom" *ngIf="metodo_pago == 'Transferencia o Deposito'">
-                                  <a *ngIf="!btn_load" class="ps-btn ps-btn--black" id="btnBuy" style="cursor: pointer;" (click)="generar_pedido('Transferencia o Deposito')">Realizar pedido</a>
-                                  <button *ngIf="btn_load" class="ps-btn ps-btn--black btnBuy" style="cursor: pointer;" disabled>Procesando...</button>
+                                  <app-button
+                                    text="Realizar pedido"
+                                    id="btnBuy"
+                                    class="ps-btn--fullwidth"
+                                    (click)="generar_pedido('Transferencia o Deposito')"
+                                    [loading]="isProcessingPurchase"
+                                    loadingText="Procesando..."
+                                  ></app-button>
                                 </div>   
                             </ng-container>
                         </ng-container>

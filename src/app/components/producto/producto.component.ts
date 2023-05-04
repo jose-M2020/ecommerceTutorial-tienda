@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { calcAverageRating } from 'src/app/helpers/producto';
 
 @Component({
   selector: 'app-producto',
@@ -9,9 +10,13 @@ export class ProductoComponent implements OnInit {
   @Input() producto: any;
   @Input() currency: String;
   
+  public rating: Number = 0;
+
   constructor() { }
 
   ngOnInit(): void {
+    // console.log(this.producto)
+    // this.rating = calcAverageRating(this.producto.review)
   }
 
 }

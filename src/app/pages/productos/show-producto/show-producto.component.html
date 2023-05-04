@@ -38,11 +38,12 @@
                 <div class="ps-product__info-header">
                   <div class="ps-product__rating">
                     <div class="mr-3">
-                      <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                      <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                      <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                      <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                      <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
+                      <span *ngFor="let index of [1,2,3,4,5]">
+                        <i [ngClass]="{
+                          'fa fa-star': true,
+                          'active': index <= rating?.averageRating
+                        }"></i>
+                      </span>
                     </div>
                     <span>Reviews</span>
                   </div>
@@ -84,21 +85,13 @@
                       <button class="up" (click)="SumCant()"></button>
                       <button class="down" (click)="RestCant()"></button>
                       <input class="form-control" type="text" name="cantidad" min="1" [(ngModel)]="carrito_data.cantidad">
-      
                     </div>
-                    <ng-container *ngIf="user_lc != undefined">
-                      <app-button
-                        text="Agregar al carrito"
-                        (click)="agregar_producto()"
-                        [loading]='addingItem'
-                        loadingText='Agregando...'
-                      ></app-button>
-                    </ng-container>
-                    <ng-container *ngIf="user_lc == undefined">
-                      <a class="ps-btn ps-btn--black text-white" (click)="agregar_producto_guest()" style="margin-right: 0px;cursor: pointer;"> Agregar al carrito</a>
-                    </ng-container>
-                    
-          
+                    <app-button
+                      text="Agregar al carrito"
+                      (click)="user_lc == undefined ? addItemToGuestCart() : addItemToCart()"
+                      [loading]='addingItem'
+                      loadingText='Agregando...'
+                    ></app-button>
                   </figure>
                 
                 </div>
@@ -137,44 +130,18 @@
                     <div class="ps-product__review">
                       <h4>{{reviews.length}} reseñas para {{producto.titulo}}</h4>
                       <ng-container *ngIf="reviews.length >= 1">
-                        <div class="ps-block--comment ps-block--comment-review" *ngFor="let item of reviews | slice: (page-1)*pageSize : (page-1) * pageSize + pageSize">
+                        <div
+                          class="ps-block--comment ps-block--comment-review"
+                          *ngFor="let item of reviews | slice: (page-1)*pageSize : (page-1) * pageSize + pageSize"
+                        >
                           <div class="ps-block__thumbnail"><img src="assets/img/detault.png" alt=""></div>
                           <div class="ps-block__content">
-                            <div *ngIf="item.estrellas == 1">
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#ccc!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#ccc!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#ccc!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#ccc!important"></i></span>
-                            </div>
-                            <div *ngIf="item.estrellas == 2">
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#ccc!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#ccc!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#ccc!important"></i></span>
-                            </div>
-                            <div *ngIf="item.estrellas == 3">
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#ccc!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#ccc!important"></i></span>
-                            </div>
-                            <div *ngIf="item.estrellas == 4">
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#ccc!important"></i></span>
-                            </div>
-                            <div *ngIf="item.estrellas == 5">
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                              <span><i class="fa fa-star" style="color:#f1ee51!important"></i></span>
-                            </div>
+                            <span *ngFor="let index of [1,2,3,4,5]">
+                              <i [ngClass]="{
+                                'fa fa-star': true,
+                                'active': index <= item.estrellas
+                              }"></i>
+                            </span>
                             <h5>{{item.cliente.nombres}} {{item.cliente.apellidos}} <span> {{item.createdAt|date}}</span></h5>
                             <p>{{item.review}}</p>
                           </div>

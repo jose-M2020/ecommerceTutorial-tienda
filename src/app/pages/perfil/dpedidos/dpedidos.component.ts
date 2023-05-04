@@ -22,6 +22,7 @@ export class DpedidosComponent implements OnInit {
   public totalstar = 5;
 
   public review : any = {};
+  public isPostingReview = false;
 
   constructor(
     private _guestService:GuestService,
@@ -81,6 +82,7 @@ export class DpedidosComponent implements OnInit {
     this.review.producto = item.producto._id;
     this.review.cliente = item.cliente;
     this.review.venta = this.id;
+    this.review.estrellas = this.totalstar;
 
 }
 
@@ -91,46 +93,45 @@ export class DpedidosComponent implements OnInit {
     
   }
 
-  emitir(id:any){
-    if(this.review.review){
-      if(this.review.estrellas && this.review.estrellas >= 0){
-        console.log(this.review);
-        
-        this._guestService.emitir_review_producto_cliente(this.review,this.token).subscribe(
-          response=>{
-            console.log(response);
-            
-            iziToast.show({
-                title: 'SUCCESS',
-                titleColor: '#1DC74C',
-                color: '#FFF',
-                class: 'text-success',
-                position: 'topRight',
-                message: 'Se emitio correctamente la reseña.'
-            });
-            window.location.reload();
-          }
-        );
-        
-      }else{
-        iziToast.show({
-            title: 'ERROR',
-            titleColor: '#FF0000',
-            color: '#FFF',
-            class: 'text-danger',
-            position: 'topRight',
-            message: 'Seleccione el numero de estrellas'
-        });
-      }
-    }else{
-      iziToast.show({
-          title: 'ERROR',
-          titleColor: '#FF0000',
-          color: '#FFF',
-          class: 'text-danger',
-          position: 'topRight',
-          message: 'Ingrese un mensaje de la reseña'
+  addReview(id:any){
+    if(this.isPostingReview) return;
+
+    if(!this.review.review){
+      return iziToast.show({
+        title: 'ERROR',
+        titleColor: '#FF0000',
+        color: '#FFF',
+        class: 'text-danger',
+        position: 'topRight',
+        message: 'Ingrese un mensaje de la reseña'
       });
     }
+    if(!this.review.estrellas && this.review.estrellas < 1){
+      return iziToast.show({
+        title: 'ERROR',
+        titleColor: '#FF0000',
+        color: '#FFF',
+        class: 'text-danger',
+        position: 'topRight',
+        message: 'Seleccione el numero de estrellas'
+      });
+    }
+
+    this.isPostingReview = true;
+
+    this._guestService.emitir_review_producto_cliente(this.review,this.token).subscribe(
+      response=>{
+        iziToast.show({
+            title: 'SUCCESS',
+            titleColor: '#1DC74C',
+            color: '#FFF',
+            class: 'text-success',
+            position: 'topRight',
+            message: 'Se emitio correctamente la reseña.'
+        });
+        window.location.reload();
+      },
+      error => this.isPostingReview = false
+    );
   }
 }

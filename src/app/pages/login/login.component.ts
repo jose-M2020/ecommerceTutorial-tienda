@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   public new_user : any = {};
   public op = 1;
-  public carrito_logout :Array<any> = [];
+  public guestCart :Array<any> = [];
   
   public isLoggin: boolean = false;
   public isRegistering: boolean = false;
@@ -64,12 +64,12 @@ export class LoginComponent implements OnInit {
 
     let ls_cart = localStorage.getItem('cart');
     if(ls_cart != null){
-      this.carrito_logout = JSON.parse(ls_cart);
+      this.guestCart = JSON.parse(ls_cart);
     }else{
-      this.carrito_logout = [];
+      this.guestCart = [];
     }
 
-    data.carrito = this.carrito_logout;
+    data.carrito = this.guestCart;
     
     this._guestService.login_cliente(data).subscribe(
       response=>{
@@ -88,6 +88,18 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token',response.token);
           localStorage.setItem('_id',response.data._id);
           localStorage.setItem('user_data',JSON.stringify(response.data));
+
+          if(response?.message){
+            iziToast.show({
+              title: 'ERROR',
+              titleColor: '#1DC74C',
+              color: '#FFF',
+              class: 'text-danger',
+              position: 'topRight',
+              message: response.message
+            });
+          }
+
           this._router.navigate(['/']).then(() => {
             window.location.reload();
           })
