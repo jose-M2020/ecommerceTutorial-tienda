@@ -148,13 +148,10 @@ export class ShowProductoComponent implements OnInit {
   }
 
   select_variedad(){
-    let arr_variedad = this.selectedVariety.split('_');
-    this.obj_variedad_select.id = arr_variedad[0];
-    this.obj_variedad_select.variedad = arr_variedad[1];
-    this.obj_variedad_select.stock = arr_variedad[2];
-
-    console.log(this.obj_variedad_select);
-
+    const arrVariedad = this.selectedVariety.split('_');
+    this.obj_variedad_select.id = arrVariedad[0];
+    this.obj_variedad_select.variedad = arrVariedad[1];
+    this.obj_variedad_select.stock = arrVariedad[2];
   }
 
   SumCant(){
@@ -170,7 +167,10 @@ export class ShowProductoComponent implements OnInit {
   init_productos_recomendados(){
     this._guestService.listar_productos_recomendados_publico(this.producto.categoria).subscribe(
       response=>{
-        this.productos_rec = response.data;
+        for(var item of response.data){
+          item.producto.review = item.review,
+          this.productos_rec.push(item.producto);
+        }
       }
     );
   }

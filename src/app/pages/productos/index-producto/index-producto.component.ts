@@ -127,6 +127,7 @@ export class IndexProductoComponent implements OnInit {
       response=>{
         for(var item of response.data){
           item.producto.variedades = item.variedades,
+          item.producto.review = item.review,
           this.productos.push(item.producto);
         }
 

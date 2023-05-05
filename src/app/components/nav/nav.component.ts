@@ -68,6 +68,7 @@ export class NavComponent implements OnInit {
     }
     
   ];
+  
   public user : any = undefined;
   public user_lc : any = undefined;  
 

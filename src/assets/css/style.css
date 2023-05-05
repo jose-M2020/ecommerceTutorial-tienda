@@ -4548,12 +4548,34 @@ textarea.form-control {
 .ps-product .ps-product__price {
   color: #bbbbbb;
   margin-bottom: 0;
-  color: #bbb; }
-  .ps-product .ps-product__price.sale {
-    color: #222; }
+  color: #bbb;
+}
+
+.ps-product .ps-product__price.sale {
+  color: #222;
+}
+
     .ps-product .ps-product__price.sale del {
       margin-right: 10px;
       color: #bbb; }
+
+.ps-product__stock {
+  position: relative;
+  font-size: 16px;
+  margin-left: 50px;
+}
+
+.ps-product__stock::before {
+  content: '';
+  background-color: #f03131;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 50%;
+  left: -15px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
 
 .ps-product .ps-product__content {
   padding-top: 15px; }

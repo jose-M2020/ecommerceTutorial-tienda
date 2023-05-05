@@ -84,7 +84,11 @@ export class InicioComponent implements OnInit {
     this.loadingNewProductos = true;
     this._guestService.listar_productos_nuevos_publico().subscribe(
       response=>{
-        this.new_productos = response.data;
+        for(var item of response.data){
+          item.producto.review = item.review,
+          this.new_productos.push(item.producto);
+        }
+        
         this.loadingNewProductos = false;
       }
     );

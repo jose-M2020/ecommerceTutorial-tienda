@@ -15,8 +15,7 @@ export class ProductoComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // console.log(this.producto)
-    // this.rating = calcAverageRating(this.producto.review)
+    this.rating = calcAverageRating(this.producto.review)
   }
 
 }
