@@ -1,17 +1,17 @@
-<div class="banner row"
-     *ngIf="config.envio.envio_activacion != 'Desactivado'" 
+<div class="banner row mx-0"
+     *ngIf="config?.envio?.envio_activacion != 'Desactivado'" 
 >
     <div class="col-12 text-center">
         ENVIO GRATIS POR COMPRAS MAYORES A
-        <span *ngIf="currency == 'MXN'">$MXN{{config.envio.monto_min_mexicanos}}</span>
-        <span *ngIf="currency != 'MXN'">${{config.envio.monto_min_dolares}}</span>
+        <span *ngIf="currency == 'MXN'">$MXN{{config?.envio?.monto_min_mexicanos}}</span>
+        <span *ngIf="currency != 'MXN'">${{config?.envio?.monto_min_dolares}}</span>
     </div>
 </div>
 
 <header class="header header--standard" data-sticky="true">   
     <div class="header__left">
-        <a class="ps-logo" [routerLink]="['/']" routerLinkActive="router-link-active">
-            <img *ngIf="config" src="{{ config.logo.secure_url }}" alt="Logo" style="width:150px;">
+        <a class="ps-logo my-3" [routerLink]="['/']" routerLinkActive="router-link-active">
+            <img *ngIf="config" src="{{ config?.logo?.secure_url }}" alt="Logo" style="width:100%; max-width: 150px;">
         </a>
     </div>
     <div class="header__right">
@@ -71,12 +71,12 @@
   
                   <ng-container *ngIf="user_lc != undefined">
                       <a class="header__cart ps-toggle--sidebar" (click)="openCart()">
-                          <i class="icon-cart"></i><span>{{carrito_arr.length}}</span>
+                          <i class="icon-cart"></i><span>{{cart.length}}</span>
                       </a>
                   </ng-container>
                   <ng-container *ngIf="user_lc == undefined">
                       <a class="header__cart ps-toggle--sidebar" (click)="openCart()">
-                          <i class="icon-cart"></i><span>{{carrito_logout.length}}</span>
+                          <i class="icon-cart"></i><span>{{currentCart.length}}</span>
                       </a>
                   </ng-container>
   
@@ -87,11 +87,11 @@
     </div>
 </header>
 
-<header class="header header--mobile" data-sticky="true" style="background: #f1f2f8;" >
+<header class="header header--mobile" data-sticky="true">
     <div class="header__left">
         <a class="ps-logo py-3" [routerLink]="['/']" routerLinkActive="router-link-active" >
             <!-- <img src="assets/img/logo-res.png" alt=""> -->
-            <img *ngIf="config" src="{{ config.logo.secure_url }}" alt="Logo" style="width:150px;">
+            <img *ngIf="config" src="{{ config?.logo?.secure_url }}" alt="Logo" style="width:100%; max-width: 90px;">
         </a>
     </div>
     <div class="header__right">
@@ -104,12 +104,12 @@
                 </ng-container>
                 <ng-container *ngIf="user_lc != undefined">
                     <a class="header__cart ps-toggle--sidebar" (click)="openCart()">
-                        <i class="icon-cart"></i><span>{{carrito_arr.length}}</span>
+                        <i class="icon-cart"></i><span>{{cart.length}}</span>
                     </a>
                 </ng-container>
                 <ng-container *ngIf="user_lc == undefined">
                     <a class="header__cart ps-toggle--sidebar" (click)="openCart()">
-                        <i class="icon-cart"></i><span>{{carrito_logout.length}}</span>
+                        <i class="icon-cart"></i><span>{{currentCart.length}}</span>
                     </a>
                 </ng-container>
             <a class="header__menu-toggle ps-toggle--sidebar" style="cursor: pointer;" (click)="openMenu()"><i class="icon-menu"></i></a>
@@ -123,21 +123,29 @@
     </div>
     <div class="ps-panel__content">
         <div class="ps-cart--mini">
-            <div class="ps-cart__content" *ngIf="user_lc == undefined">
-                <ng-container *ngIf="carrito_logout.length >= 1">
+            <div class="ps-cart__content">
+                <ng-container *ngIf="currentCart.length >= 1">
                     <div class="ps-cart__items">
-                        <div class="ps-product--mini-cart" *ngFor="let item of carrito_logout; let idx = index">
+                        <div
+                          *ngFor="let item of currentCart; let idx = index"
+                          class="ps-product--mini-cart"
+                        >
                             <div class="ps-product__thumbnail">
                                 <a [routerLink]="['/productos/',item.producto.slug]">
-                                    <img [src]="item.producto.portada.secure_url" alt="">
+                                    <img [src]="item.producto?.portada?.secure_url" alt="">
                                 </a>
                             </div>
                             <div class="ps-product__content">
-                                <span class="ps-product__remove" style="cursor: pointer;" (click)="eliminar_item_guest(item)"><i class="icon-cross"></i>
+                                <span
+                                  (click)="user_lc === undefined ? deleteGuestCartItem(item) : deleteCartItem(item._id)"
+                                  class="ps-product__remove"
+                                  style="cursor: pointer;"
+                                >
+                                    <i class="icon-cross"></i>
                                 </span>
                                 <a class="ps-product__title" [routerLink]="['/productos/',item.producto.slug]">{{item.producto.titulo}}</a>
                                 <p> Cantidad: {{item.cantidad}}</p>
-                                <p> Talla: {{item.variedad.variedad}}</p>
+                                <p> Talla: {{ user_lc === undefined ? item.variedad.variedad : item.inventario.variedad.valor }}</p>
                                 <span class="ps-product__price">
                                     <ng-container *ngIf="currency != 'MXN'">         
                                       <span class=" mr-3"><b style="    color: #999ea9;">${{item.producto.precio_dolar}}</b></span>
@@ -155,10 +163,9 @@
                                 </span>
                             </div>
                         </div>
-                       
                     </div>
                 </ng-container>
-                <ng-container *ngIf="carrito_logout.length == 0">
+                <ng-container *ngIf="currentCart.length == 0">
                     <form class="ps-form--404" action="404-page.html" method="get">
                         <div class="ps-form__header">
                             <img src="assets/img/carrito-de-compras.png" style="width: 220px !important; " alt="">
@@ -174,11 +181,11 @@
                         <span *ngIf="currency != 'MXN'">${{subtotal}}</span>
                         <span *ngIf="currency == 'MXN'">$MXN{{subtotal}}</span>
                     </strong></h3>
-                      <figure  *ngIf="carrito_logout.length != 0">
+                      <figure  *ngIf="currentCart.length != 0">
                           <app-button
                             text="Carrito"
                             path="/carrito"
-                            class="ps-btn--outline"
+                            class="reset-style ps-btn--outline ps-btn--fullwidth mb-3"
                           ></app-button>
                           <app-button
                             *ngIf="user_lc != undefined"
@@ -187,9 +194,9 @@
                           ></app-button>
                       </figure>
                       <br> 
-                      <ng-container>
+                      <ng-container *ngIf="user_lc === undefined">
                           <div>
-                              <h5 class="text-center"><b style="color: #127c5f;">Antes de realizar tu compra</b></h5>
+                              <h5 class="text-center"><b style="color: var(--color-primary);">Antes de realizar tu compra</b></h5>
                           </div>
                           <br>
                           <p>
@@ -200,70 +207,6 @@
                           </p>
                       </ng-container>
                       
-                </div>
-            </div>
-            <div class="ps-cart__content" *ngIf="user_lc != undefined">
-                <ng-container *ngIf="carrito_arr.length >= 1">
-                    <div class="ps-cart__items">
-                        <div class="ps-product--mini-cart" *ngFor="let item of carrito_arr; let idx = index">
-                            <div class="ps-product__thumbnail">
-                                <a [routerLink]="['/productos/',item.producto.slug]">
-                                    <img [src]="item.producto.portada.secure_url" alt="">
-                                </a>
-                            </div>
-                            <div class="ps-product__content"><span  style="cursor: pointer;" (click)="eliminar_item(item._id)" class="ps-product__remove"><i class="icon-cross"></i></span>
-                                <a class="ps-product__title" [routerLink]="['/productos/',item.producto.slug]">{{item.producto.titulo}}</a>
-                                <p> Cantidad: {{item.cantidad}}</p>
-                                <p> Talla: {{item.inventario.variedad.valor}}</p>
-                                <span class="ps-product__price">
-                                  <ng-container *ngIf="currency != 'MXN'">         
-                                      <span class=" mr-3"><b style="    color: #999ea9;">${{item.producto.precio_dolar}}</b></span>
-                                      <span class="text-danger" *ngIf="item.producto.precio_antes_dolares >= 1">
-                                        <del>${{item.producto.precio_antes_dolares}}</del>
-                                      </span>
-                                    </ng-container>
-                                    <ng-container *ngIf="currency == 'MXN'">
-                                      
-                                      <span class=" mr-3"><b style="    color: #999ea9;">$MXN{{item.producto.precio}}</b></span>
-                                      <span class="text-danger" *ngIf="item.producto.precio_antes_soles >= 1">
-                                        <del>$MXN{{item.producto.precio_antes_soles}}</del>
-                                      </span>
-                                    </ng-container>
-                                </span>
-                            </div>
-                        </div>
-                       
-                    </div>
-                </ng-container>
-                <ng-container *ngIf="carrito_arr.length == 0">
-                    <form class="ps-form--404" action="404-page.html" method="get">
-                        <div class="ps-form__header">
-                            <img src="assets/img/carrito-de-compras.png" style="width: 220px !important; " alt="">
-                        </div>
-                        <h4 class="text-muted">¡Tu carrito esta vacio!</h4>
-                        <a [routerLink]="['/productos']" routerLinkActive="router-link-active"  style="text-decoration: underline;
-                        font-weight: 700;">Volver a la tienda</a>
-                      </form>
-                </ng-container>
-                
-                <div class="ps-cart__footer">
-                    <h3>Sub Total:<strong>
-                        <span *ngIf="currency != 'MXN'">${{subtotal}}</span>
-                        <span *ngIf="currency == 'MXN'">$MXN{{subtotal}}</span>
-                    </strong></h3>
-                  
-                    <figure *ngIf="carrito_arr.length != 0">
-                        <app-button
-                          text="Carrito"
-                          path="/carrito"
-                          class="reset-style ps-btn--outline ps-btn--fullwidth mb-3"
-                        ></app-button>
-                        <app-button
-                          *ngIf="user_lc != undefined"
-                          text="Checkout"
-                          path="/checkout"
-                        ></app-button>
-                      </figure>
                 </div>
             </div>
         </div>
@@ -300,13 +243,12 @@
                     <li *ngIf="user_lc"><a (click)="logout()" >{{ 'menu.item_diez' | translate }}</a></li>
                 </ul>
                 <ul class="menu--mobile">
-                    <li><a  [routerLink]="['/']" >{{ 'menu.item_inicio' | translate }}</a></li>
+                    <li><a  [routerLink]="['/']" >{{ 'menu.item_uno' | translate }}</a></li>
                     <li class="menu-item-has-children has-mega-menu"><a  [routerLink]="['/productos']" routerLinkActive="router-link-active" >Shop</a><span class="sub-toggle"></span>
                         <div class="mega-menu">
                             <div class="mega-menu__column">
                                 <h4>Categorías<span class="sub-toggle"></span></h4>
                                 <ul class="sub-menu--mega">
-                               
                                     <li *ngFor="let item of categorias">
                                         <a [routerLink]="['/productos/categoria/',item.titulo.toLowerCase()]">{{item.titulo}}</a>
                                     </li>

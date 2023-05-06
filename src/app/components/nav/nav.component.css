@@ -13,7 +13,8 @@ i.icon-magnifier {
     left: 0;
     z-index: 1030;
     background: var(--color-secondary);
-    color: var(--text-light)
+    color: var(--text-light);
+    padding: 8px 18px;
 }
 
 /* 1. HEADER */
@@ -22,6 +23,10 @@ i.icon-magnifier {
   display: none;
   background: #f7f8fa !important;
   box-shadow: 0 4px 5px #eeeff2;
+
+  position: sticky;
+  z-index: 100;
+  transition: top 0.5s ease-in-out;
 }
 .header .header__cart {
   position: relative;
@@ -164,8 +169,7 @@ i.icon-magnifier {
   left: 0;
   width: 100%;
   z-index: 999;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 0 15px;
   background-color: #fff;
 }
 
@@ -203,7 +207,7 @@ i.icon-magnifier {
 
 @media (min-width: 1440px) {
   .header {
-    padding: 30px 60px;
+    padding: 8px 60px;
   }
 }
 
@@ -217,7 +221,12 @@ i.icon-magnifier {
 }
 
 /* 2. HEADER STANDARD */
-  
+
+.header--standard.hide {
+  top: -100%;
+  transition: top 0.9s ease-in-out;
+}
+
 .header--standard .header__search {
   padding-right: 100px;
 }

@@ -14,11 +14,12 @@
     </div>
     <div class="ps-product__content"><a class="ps-product__title"[routerLink]="['/productos/'+producto.slug]" >{{producto.titulo}}</a>
       <div class="ps-product__rating">
-        <span><i class="fa fa-star"></i></span>
-        <span><i class="fa fa-star"></i></span>
-        <span><i class="fa fa-star"></i></span>
-        <span><i class="fa fa-star"></i></span>
-        <span><i class="fa fa-star"></i></span>
+        <span *ngFor="let index of [1,2,3,4,5]">
+          <i [ngClass]="{
+            'fa fa-star': true,
+            'active': index <= rating
+          }"></i>
+        </span>
       </div>
       <p class="ps-product__price">
         <ng-container *ngIf="currency != 'MXN'">         

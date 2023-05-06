@@ -25,7 +25,7 @@ export class InicioComponent implements OnInit {
   public productImgUrl = this.url + 'producto/portada/';
   public isAvailable = isAvailable;
 
-  public new_productos: Array<any> = [];
+  public newProducts: Array<any> = [];
   public loadingNewProductos: boolean = true;
   public items = [1,2,3,4,5,6];
   
@@ -44,11 +44,11 @@ export class InicioComponent implements OnInit {
     script.src= 'assets/js/main.js';
     head.appendChild(script);
     
-    this.init_productos_destacados();
-    this.init_productos_nuevos();
+    this.getFeaturedProducts();
+    this.getNewProducts();
   }
 
-  init_productos_destacados(){
+  getFeaturedProducts(){
     this.loadingDestacados = true;
     this._guestService.listar_productos_destacados_publico().subscribe(
       response=>{
@@ -80,11 +80,15 @@ export class InicioComponent implements OnInit {
     );
   }
 
-  init_productos_nuevos(){
+  getNewProducts(){
     this.loadingNewProductos = true;
     this._guestService.listar_productos_nuevos_publico().subscribe(
       response=>{
-        this.new_productos = response.data;
+        for(var item of response.data){
+          item.producto.review = item.review,
+          this.newProducts.push(item.producto);
+        }
+        
         this.loadingNewProductos = false;
       }
     );
