@@ -86,22 +86,22 @@
         });
     }
 
-    function stickyHeader() {
-        var header = $('.header'),
-            checkpoint = 50;
-        if (header.data('sticky') === true) {
-            $(window).scroll(function() {
-                var currentPosition = $(this).scrollTop();
-                if (currentPosition > checkpoint) {
-                    header.addClass('header--sticky');
-                } else {
-                    header.removeClass('header--sticky');
-                }
-            });
-        } else {
-            return false;
-        }
-    }
+    // function stickyHeader() {
+    //     var header = $('.header'),
+    //         checkpoint = 50;
+    //     if (header.data('sticky') === true) {
+    //         $(window).scroll(function() {
+    //             var currentPosition = $(this).scrollTop();
+    //             if (currentPosition > checkpoint) {
+    //                 // header.addClass('header--sticky');
+    //             } else {
+    //                 // header.removeClass('header--sticky');
+    //             }
+    //         });
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
     function setAnimation(_elem, _InOut) {
         var animationEndEvent = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
@@ -717,16 +717,28 @@ function navigateCarousel() {
 }
 
 function stickyHeader() {
-    var header = $('.header'),
-        checkpoint = 50;
+    const header = $('.header'),
+          checkpoint = 50;
+
+    let prevScrollpos = window.pageYOffset;
+    
     if (header.data('sticky') === true) {
         $(window).scroll(function() {
-            var currentPosition = $(this).scrollTop();
-            if (currentPosition > checkpoint) {
-                header.addClass('header--sticky');
+            let currentScrollPos = window.pageYOffset;
+            if (prevScrollpos > currentScrollPos) {
+              header.css('top', 0);
             } else {
-                header.removeClass('header--sticky');
+              header.css('top', `-${header.height() + 30}px`);
             }
+
+            prevScrollpos = currentScrollPos;
+            // var currentPosition = $(this).scrollTop();
+
+            // if (currentPosition > checkpoint) {
+                // header.addClass('header--sticky');
+            // } else {
+                // header.removeClass('header--sticky');
+            // }
         });
     } else {
         return false;

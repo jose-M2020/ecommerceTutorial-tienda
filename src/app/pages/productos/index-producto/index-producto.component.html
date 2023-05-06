@@ -29,7 +29,11 @@
 
             <div class="row mt-3">
               <div class="col-12">
-                <button class="ps-btn ps-btn--black btn-block" (click)="buscar_precios()">{{ 'shop.item_tres' | translate }}</button>
+                <app-button
+                  [text]="'shop.item_tres' | translate"
+                  (click)="buscar_precios()"
+                  class="ps-btn--sm btn-block"
+                ></app-button>
               </div>
             </div>
 
@@ -86,7 +90,7 @@
             </div>
      
           </aside>
-          <aside class="widget widget_shop widget_product">
+          <!-- <aside class="widget widget_shop widget_product">
             <h3 class="widget-title">{{ 'shop.item_cuatro' | translate }}</h3>
             <ng-container *ngFor="let item of mas_vendidos;let idx = index">
               <div class="ps-product--sidebar">
@@ -112,15 +116,15 @@
                 </div>
               </div>
             </ng-container>
-          </aside>
+          </aside> -->
         </div>
         <div class="ps-shop__wrapper">
           <div class="ps-shop__header" style="padding-bottom: 50px !important;">
             <div class="ps-shop__left">
-              <h1>Shop</h1>
+              <h1>Tienda</h1>
               <ul class="ps-breadcrumb">
                 <li><a [routerLink]="['/']" routerLinkActive="router-link-active" >Home</a></li>
-                <li>Shop</li>
+                <li>Tienda</li>
               </ul>
             </div>
             <div class="ps-shop__right">

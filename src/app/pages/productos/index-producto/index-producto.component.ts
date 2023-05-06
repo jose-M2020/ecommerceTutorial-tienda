@@ -25,7 +25,7 @@ export class IndexProductoComponent implements OnInit {
 
   public categorias :Array<any> = [];
   public filter_cat_tallas = 'todos';
-  public mas_vendidos :Array<any> =[];
+  // public mas_vendidos :Array<any> =[];
   public url =URL_SERVICES;
 
   public productos: Array<any> =[];
@@ -81,12 +81,12 @@ export class IndexProductoComponent implements OnInit {
       $('.noUi-tooltip').css('font-size','11px');
     }, 150);
 
-    this._guestService.listar_productos_destacados_publico().subscribe(
-      response=>{
-        this.mas_vendidos = response.data;
+    // this._guestService.listar_productos_destacados_publico().subscribe(
+    //   response=>{
+    //     this.mas_vendidos = response.data;
 
-      }
-    );
+    //   }
+    // );
 
     this._guestService.get_categorias().subscribe(
       response=>{

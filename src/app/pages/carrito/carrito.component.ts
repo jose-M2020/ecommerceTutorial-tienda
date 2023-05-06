@@ -15,9 +15,9 @@ export class CarritoComponent implements OnInit {
 
   public userCart : Array<any> = [];
   public guestCart: Array<any> = [];
+  public currentCart: Array<any> = [];
   public url = URL_SERVICES;
   public productImgUrl = this.url + 'producto/portada/';
-  public currentCart: Array<any> = [];
 
   public geo : any = {};
   public country = '';
