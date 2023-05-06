@@ -699,22 +699,26 @@ function productLightbox() {
   });
 }
 
-function navigateCarousel() {
-    var link = $('.ps-home-banner .ps-section__nav a'),
-        owl = $('.ps-home-banner').find('.owl-slider');
-    owl.owlCarousel();
-    link.on('click', function(e) {
-        e.preventDefault();
-        var el = $(this),
-            position = el.closest('li').index();
-        console.log(position);
-        if (!el.closest('li').hasClass('active')) {
-            el.closest('li').addClass('active');
-            el.closest('li').siblings('li').removeClass('active');
-            owl.trigger('to.owl.carousel', [position, 1, true]);
-        }
-    });
-}
+// function navigateCarousel() {
+//     var link = $('.ps-home-banner .ps-section__nav a'),
+//         owl = $('.ps-home-banner').find('.owl-slider');
+//     owl.owlCarousel({
+//         autoplay: true,
+//         goToFirst : true,
+//         goToFirstSpeed : 100,
+//     });
+//     link.on('click', function(e) {
+//         e.preventDefault();
+//         var el = $(this),
+//             position = el.closest('li').index();
+        
+//         if (!el.closest('li').hasClass('active')) {
+//             el.closest('li').addClass('active');
+//             el.closest('li').siblings('li').removeClass('active');
+//             owl.trigger('to.owl.carousel', [position, 1, true]);
+//         }
+//     });
+// }
 
 function stickyHeader() {
     const header = $('.header'),

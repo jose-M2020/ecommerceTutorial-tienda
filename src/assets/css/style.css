@@ -2750,7 +2750,8 @@ textarea.form-control {
     .ps-panel--sidebar .ps-panel__header {
       padding: 20px 30px 0; }
     .ps-panel--sidebar .ps-panel__content {
-      padding: 50px; } }
+      padding: 35px; }
+    }
 
 #navigation-mobile .ps-panel__content {
   height: 100%;
@@ -8607,7 +8608,7 @@ textarea.form-control {
   -ms-flex-pack: justify;
   justify-content: space-between; }
 
-@media (min-width: 1200px) {
+@media (min-width: 1100px) {
   .ps-shop--sidebar .widget_shop {
     margin-bottom: 50px; }
   .ps-shop--sidebar .ps-shop__banner {

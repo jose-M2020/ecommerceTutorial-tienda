@@ -1,17 +1,17 @@
-<div class="banner row"
-     *ngIf="config.envio.envio_activacion != 'Desactivado'" 
+<div class="banner row mx-0"
+     *ngIf="config?.envio?.envio_activacion != 'Desactivado'" 
 >
     <div class="col-12 text-center">
         ENVIO GRATIS POR COMPRAS MAYORES A
-        <span *ngIf="currency == 'MXN'">$MXN{{config.envio.monto_min_mexicanos}}</span>
-        <span *ngIf="currency != 'MXN'">${{config.envio.monto_min_dolares}}</span>
+        <span *ngIf="currency == 'MXN'">$MXN{{config?.envio?.monto_min_mexicanos}}</span>
+        <span *ngIf="currency != 'MXN'">${{config?.envio?.monto_min_dolares}}</span>
     </div>
 </div>
 
 <header class="header header--standard" data-sticky="true">   
     <div class="header__left">
         <a class="ps-logo my-3" [routerLink]="['/']" routerLinkActive="router-link-active">
-            <img *ngIf="config" src="{{ config.logo.secure_url }}" alt="Logo" style="width:100%; max-width: 150px;">
+            <img *ngIf="config" src="{{ config?.logo?.secure_url }}" alt="Logo" style="width:100%; max-width: 150px;">
         </a>
     </div>
     <div class="header__right">
@@ -91,7 +91,7 @@
     <div class="header__left">
         <a class="ps-logo py-3" [routerLink]="['/']" routerLinkActive="router-link-active" >
             <!-- <img src="assets/img/logo-res.png" alt=""> -->
-            <img *ngIf="config" src="{{ config.logo.secure_url }}" alt="Logo" style="width:100%; max-width: 90px;">
+            <img *ngIf="config" src="{{ config?.logo?.secure_url }}" alt="Logo" style="width:100%; max-width: 90px;">
         </a>
     </div>
     <div class="header__right">
@@ -132,7 +132,7 @@
                         >
                             <div class="ps-product__thumbnail">
                                 <a [routerLink]="['/productos/',item.producto.slug]">
-                                    <img [src]="item.producto.portada.secure_url" alt="">
+                                    <img [src]="item.producto?.portada?.secure_url" alt="">
                                 </a>
                             </div>
                             <div class="ps-product__content">
@@ -196,7 +196,7 @@
                       <br> 
                       <ng-container *ngIf="user_lc === undefined">
                           <div>
-                              <h5 class="text-center"><b style="color: #127c5f;">Antes de realizar tu compra</b></h5>
+                              <h5 class="text-center"><b style="color: var(--color-primary);">Antes de realizar tu compra</b></h5>
                           </div>
                           <br>
                           <p>

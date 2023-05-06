@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GuestService } from 'src/app/services/guest.service';
 import { URL_SERVICES } from 'src/environments/environment';
@@ -25,6 +25,7 @@ export class IndexProductoComponent implements OnInit {
 
   public categorias :Array<any> = [];
   public filter_cat_tallas = 'todos';
+  public showFilters = true;
   // public mas_vendidos :Array<any> =[];
   public url =URL_SERVICES;
 
@@ -60,6 +61,7 @@ export class IndexProductoComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.showFilters = window.innerWidth <= 1100 ? false : true;
     setTimeout(() => {
       var slider : any = document.getElementById('ps-sliderr');
 
@@ -118,6 +120,18 @@ export class IndexProductoComponent implements OnInit {
         );
       }
     );
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    if(window.innerWidth <= 1100 && this.showFilters === true) {
+      console.log('collapsed sidebar')
+      this.showFilters = false;
+    } 
+    else if(window.innerWidth > 1100 && this.showFilters === false) {
+      console.log('expanded sidebar')
+      this.showFilters = true;
+    } 
   }
 
   getProducts(filter?: any){
@@ -243,4 +257,14 @@ export class IndexProductoComponent implements OnInit {
   agregar_producto(producto:any){}
 
   agregar_producto_guest(producto:any){}
+
+
+  openFilter(){
+    var clase = $('#modalFilter').attr('class');
+    if(clase == 'ps-panel--sidebar'){
+      $('#modalFilter').addClass('active');
+    }else if(clase == 'ps-panel--sidebar active'){
+      $('#modalFilter').removeClass('active');
+    }
+  }
 }

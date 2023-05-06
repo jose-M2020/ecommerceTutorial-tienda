@@ -86,9 +86,7 @@ export class ShowProductoComponent implements OnInit {
         this.slug = params['slug'];
         this.load_producto = true;
         this._guestService.obtener_productos_slug_publico(this.slug).subscribe(
-          response=>{
-            console.log(response);
-            
+          response=>{            
             if(response.data != undefined){
               this.producto = response.data;
               this.init_productos_recomendados();
@@ -99,7 +97,6 @@ export class ShowProductoComponent implements OnInit {
                       this.categoria_producto = item;
                     }
                   }
-                  console.log(this.categoria_producto);
                 }
               );
              
@@ -130,8 +127,6 @@ export class ShowProductoComponent implements OnInit {
               this.data = false;
               this.load_producto = false;
             }
-            console.log(this.data);
-
           }
         );
 

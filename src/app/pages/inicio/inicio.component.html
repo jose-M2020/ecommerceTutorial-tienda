@@ -2,11 +2,11 @@
 
 <div id="homepage-default">
     <div class="ps-home-banner">
-        <div class="ps-carousel--nav owl-slider" data-owl-auto="false" data-owl-loop="false" data-owl-speed="15000"
+        <div class="ps-carousel--nav owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000"
              data-owl-gap="0" data-owl-nav="false" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1"
              data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000"
              data-owl-mousedrag="on">
-           
+            <!-- TODO: Problem with text in first slider -->
             <div class="ps-banner--5 bg--cover" data-background="assets/images/home/banner.jpg">
                 <div class="ps-banner__social">
                     <ul class="ps-list--social">
@@ -15,9 +15,35 @@
                     </ul>
                 </div>
                 <div class="ps-banner__content">
-                    <h3 data-animation-in="fadeInRight" data-animation-out="animate-out fadeOutLeft">{{ 'inicio.item_uno' | translate }}</h3>
+                    <h3 data-animation-in="fadeInRight" data-animation-out="animate-out fadeOutLeft">{{ 'inicio.banner-1' | translate }}</h3>
                     <a class="ps-link--under" [routerLink]="['/productos']"  data-animation-in="fadeInUp"
-                                          data-animation-out="animate-out fadeOutDown">{{ 'inicio.item_dieciocho' | translate }}</a>
+                                          data-animation-out="animate-out fadeOutDown">{{ 'inicio.bannerLink-1' | translate }}</a>
+                </div>
+            </div>
+            <div class="ps-banner--5 bg--cover" data-background="assets/images/home/banner-2.jpg">
+                <div class="ps-banner__social">
+                    <ul class="ps-list--social">
+                        <li><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <div class="ps-banner__content">
+                    <h3 data-animation-in="fadeInRight" data-animation-out="animate-out fadeOutLeft">{{ 'inicio.banner-2' | translate }}</h3>
+                    <a class="ps-link--under" [routerLink]="['/productos']"  data-animation-in="fadeInUp"
+                                          data-animation-out="animate-out fadeOutDown">{{ 'inicio.bannerLink-2' | translate }}</a>
+                </div>
+            </div>
+            <div class="ps-banner--5 bg--cover" data-background="assets/images/home/banner-3.jpg">
+                <div class="ps-banner__social">
+                    <ul class="ps-list--social">
+                        <li><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://www.instagram.com/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div>
+                <div class="ps-banner__content">
+                    <h3 data-animation-in="fadeInRight" data-animation-out="animate-out fadeOutLeft">{{ 'inicio.banner-3' | translate }}</h3>
+                    <a class="ps-link--under" [routerLink]="['/productos']"  data-animation-in="fadeInUp"
+                                          data-animation-out="animate-out fadeOutDown">{{ 'inicio.bannerLink-3' | translate }}</a>
                 </div>
             </div>
             <!-- <div class="row">
@@ -235,12 +261,12 @@
             </div>
             <div class="ps-section__content">
                 <div *ngIf="!loadingNewProductos; else skeletonNuevos">
-                    <div *ngIf="new_productos.length >= 1; else noProducts">
+                    <div *ngIf="newProducts.length >= 1; else noProducts">
                         <div class="row">
                             <ng-container
-                              *ngFor="let item of new_productos"
+                              *ngFor="let item of newProducts"
                             >
-                                <div class="{{isAvailable(item.visibilidad, currency) && 'col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6'}}">
+                                <div class="{{isAvailable(item.visibilidad, currency) && 'col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3'}}">
                                   <app-producto
                                     [producto]="item"
                                     [currency]="currency"
@@ -251,7 +277,7 @@
                         <div class="ps-section__footer"><a class="ps-link--under" [routerLink]="['/productos']">{{ 'inicio.item_seis' | translate }}</a></div>                   
                     </div>
                     <ng-template #noProducts>
-                        <div class="row" *ngIf="new_productos.length == 0">
+                        <div class="row" *ngIf="newProducts.length == 0">
                             <div class="col-12 text-center">
                               <h3>No se encontraron productos que mostrar</h3>
                             </div>
@@ -261,7 +287,7 @@
                 
                 <ng-template #skeletonNuevos>
                   <div class="row">
-                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6" *ngFor="let item of items">
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-3" *ngFor="let item of items">
                       <ngx-skeleton-loader 
                         [theme]="{
                           'border-radius': '0',

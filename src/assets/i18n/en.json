@@ -19,6 +19,12 @@
     "menu.item_dsiete": "Sign in",
     "menu.item_docho": "(If you are from your cell phone, swipe to the left to see more details of your order)",
 
+    "inicio.banner-1":"Dress in style and comfort",
+    "inicio.banner-2":"Discover your style with us",
+    "inicio.banner-3":"The perfect fashion for you is here",
+    "inicio.bannerLink-1":"BUY NOW",
+    "inicio.bannerLink-2":"SEARCH STYLE",
+    "inicio.bannerLink-3":"BUY NOW",
     "inicio.item_uno":"Live life in style",
     "inicio.item_dos":"clothing",
     "inicio.item_tres":"Accessories",
@@ -35,7 +41,7 @@
     "inicio.item_catorce":"Shoper, an urban clothing brand for fashion fans.",
     "inicio.item_quince":"Learn a little more about our Pragol Ambassadors.",
     "inicio.item_dieciseis":"A percentage of sales intended to promote equality in sport.",
-    "inicio.item_dieciocho":"VISIT OUR VIRTUAL STORE",
+    "inicio.item_dieciocho":"BUY NOW",
 
     "footer.item_uno":"HELP & INFORMATION",
     "footer.item_dos":"Shipping policies",
